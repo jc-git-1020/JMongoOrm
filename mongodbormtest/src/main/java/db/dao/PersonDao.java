@@ -1,10 +1,18 @@
 package db.dao;
 
+import org.bson.conversions.Bson;
+
 public class PersonDao {
 
     private static String collectionName = "person";
 
-    public void create(){}
+    public long count(){
+        return 1;
+    }
+
+    public long count(Bson filter){
+        return 1;
+    }
 
     public void update(){}
 

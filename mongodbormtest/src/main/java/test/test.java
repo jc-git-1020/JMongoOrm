@@ -11,6 +11,7 @@ import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import java.util.List;
@@ -88,6 +89,7 @@ public class test
 
         System.out.println("");
         // Replace One
+        Bson s = eq("name", "Ada Lovelace");
         updateResult = collection.replaceOne(eq("name", "Ada Lovelace"), ada);
         System.out.println(updateResult.getModifiedCount());
 
