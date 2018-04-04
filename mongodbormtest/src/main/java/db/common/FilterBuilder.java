@@ -1,7 +1,7 @@
 package db.common;
 
 import com.mongodb.client.model.Filters;
-import org.bson.BsonDocument;
+import org.bson.*;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.conversions.Bson;
 
@@ -96,13 +96,30 @@ public class FilterBuilder extends LinkedList<Bson> implements Bson {
         return this;
     }
 
+    private <TItem> boolean checkClass(final TItem value){
+
+        //参考BsonValueCodecProvider
+        Class c = value.getClass();
+        if(c == BsonString.class){
+
+        }else if(c == BsonInt32.class){
+
+        }else{
+
+        }
+
+
+        return false;
+    }
 
     @Override
     public <TDocument> BsonDocument toBsonDocument(Class<TDocument> tDocumentClass, CodecRegistry codecRegistry) {
 
-       //BsonDocument tet = new BsonDocument(this);
+       BsonDocument result = new BsonDocument();
+        for(Bson item : this){
 
-
+            BsonDocument temp = new BsonDocument();
+        }
 
         return null;
     }
