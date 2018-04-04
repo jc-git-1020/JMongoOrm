@@ -4,7 +4,6 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
@@ -21,8 +20,8 @@ public class DaoHelper {
     private static MongoDatabase database = mongoClient.getDatabase(databaseName);
 
 
-    public static MongoCollection<Document> getCollection(String name) {
-        return database.getCollection(name);
+    public static MongoCollection getCollection(String name,Class c) {
+        return database.getCollection(name,c);
     }
 
 

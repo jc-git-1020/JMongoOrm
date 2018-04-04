@@ -1,17 +1,16 @@
 package db.dao;
 
-import org.bson.conversions.Bson;
+import com.mongodb.client.MongoCollection;
+import db.model.Person;
 
 public class PersonDao {
 
     private static String collectionName = "person";
 
-    public long count(){
-        return 1;
-    }
+    private MongoCollection<Person> collection = DaoHelper.getCollection(collectionName,Person.class);
 
-    public long count(Bson filter){
-        return 1;
+    public long count(){
+        return collection.count();
     }
 
     public void update(){}
@@ -20,8 +19,6 @@ public class PersonDao {
 
     public void find(){}
 
-    public void drop(){
-        DaoHelper.getCollection(collectionName).drop();
-    }
+
 
 }

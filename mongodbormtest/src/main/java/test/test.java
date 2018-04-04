@@ -32,6 +32,29 @@ public class test
 {
     public static void main( String[] args )
     {
+
+        System.out.println( "Hello World!" );
+
+
+    }
+
+    public static void test2(){
+
+        CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
+                fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+        MongoClient mongoClient = new MongoClient("localhost", MongoClientOptions.builder().codecRegistry(pojoCodecRegistry).build());
+        MongoDatabase database = mongoClient.getDatabase("test");
+
+        MongoCollection<Person> collection = database.getCollection("people", Person.class);
+
+
+
+    }
+
+
+
+    public static void test(){
+
         CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
                 fromProviders(PojoCodecProvider.builder().automatic(true).build()));
         MongoClient mongoClient = new MongoClient("localhost", MongoClientOptions.builder().codecRegistry(pojoCodecRegistry).build());
@@ -99,10 +122,9 @@ public class test
         // Delete Many
         DeleteResult deleteResult = collection.deleteMany(eq("address.city", "London"));
         System.out.println(deleteResult.getDeletedCount());
-        System.out.println( "Hello World!" );
-
 
     }
+
 
     public static final class Person {
         private ObjectId id;
