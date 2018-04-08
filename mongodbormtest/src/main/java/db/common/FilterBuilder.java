@@ -15,18 +15,14 @@ public class FilterBuilder extends LinkedList<Bson> implements Bson {
         doc = new BsonDocument();
     }
 
-    public <TItem> FilterBuilder eq(final String fieldName, final TItem value) {
-        if (!checkClass(value))
-            throw new RuntimeException("目前不支持该类型");
-        doc.append(fieldName, (BsonValue) value);
+    public FilterBuilder eq(final String fieldName, final BsonValue value) {
+        doc.append(fieldName, value);
         return this;
     }
 
-    public <TItem> FilterBuilder ne(final String fieldName, final TItem value) {
-        if (!checkClass(value))
-            throw new RuntimeException("目前不支持该类型");
+    public FilterBuilder ne(final String fieldName, final BsonValue value) {
         BsonDocument temp = new BsonDocument();
-        temp.append("$ne", (BsonValue) value);
+        temp.append("$ne", value);
         doc.append(fieldName, temp);
         return this;
     }
@@ -106,8 +102,10 @@ public class FilterBuilder extends LinkedList<Bson> implements Bson {
         return this;
     }
 
+    //参考BsonValueCodecProvider
     private <TItem> boolean checkClass(final TItem value) {
 
+        //BsonType.UNDEFINED
         //参考BsonValueCodecProvider
         Class c = value.getClass();
         if (c == BsonString.class) {
