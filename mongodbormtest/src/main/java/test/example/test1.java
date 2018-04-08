@@ -1,5 +1,6 @@
 package test.example;
 
+import db.common.FilterBuilder;
 import db.dao.PersonDao;
 
 public class test1 {
@@ -8,7 +9,9 @@ public class test1 {
     {
 
         PersonDao dao = new PersonDao();
-        System.out.print(dao.count());
+        FilterBuilder fb = new FilterBuilder();
+        fb.eq("name","aaa");
+
 
 
         System.out.println( "Hello World!" );

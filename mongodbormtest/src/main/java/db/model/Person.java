@@ -1,8 +1,11 @@
 package db.model;
 
+import org.bson.BsonDocument;
+import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
-public class Person {
+public class Person implements Bson {
     private ObjectId id;
     private String name;
 
@@ -63,6 +66,11 @@ public class Person {
             Monther = monther;
             Fahter = fahter;
         }
+    }
+
+    @Override
+    public <TDocument> BsonDocument toBsonDocument(Class<TDocument> tDocumentClass, CodecRegistry codecRegistry) {
+        return null;
     }
 
 }
