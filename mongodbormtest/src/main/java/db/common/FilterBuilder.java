@@ -1,11 +1,12 @@
 package db.common;
 
-import com.mongodb.client.model.Filters;
 import org.bson.*;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.conversions.Bson;
 
 import java.util.LinkedList;
+
+import static java.util.Arrays.asList;
 
 public class FilterBuilder extends LinkedList<Bson> implements Bson {
 
@@ -21,103 +22,111 @@ public class FilterBuilder extends LinkedList<Bson> implements Bson {
     }
 
     public FilterBuilder ne(final String fieldName, final BsonValue value) {
-        BsonDocument temp = new BsonDocument();
-        temp.append("$ne", value);
-        doc.append(fieldName, temp);
+        doc.append(fieldName, getOperatorFilter("$ne",value));
         return this;
     }
 
-    public <TItem> FilterBuilder gt(final String fieldName, final TItem value) {
-        this.add(Filters.gt(fieldName, value));
+    public <TItem> FilterBuilder gt(final String fieldName, final BsonValue value) {
+        doc.append(fieldName, getOperatorFilter("$gt",value));
         return this;
     }
 
-    public <TItem> FilterBuilder lt(final String fieldName, final TItem value) {
-        this.add(Filters.lt(fieldName, value));
+    public <TItem> FilterBuilder lt(final String fieldName, final BsonValue value) {
+        doc.append(fieldName, getOperatorFilter("$lt",value));
         return this;
     }
 
-    public <TItem> FilterBuilder gte(final String fieldName, final TItem value) {
-        this.add(Filters.gte(fieldName, value));
+    public <TItem> FilterBuilder gte(final String fieldName, final BsonValue value) {
+        doc.append(fieldName, getOperatorFilter("$gte",value));
         return this;
     }
 
-    public <TItem> FilterBuilder lte(final String fieldName, final TItem value) {
-        this.add(Filters.lte(fieldName, value));
+    public <TItem> FilterBuilder lte(final String fieldName, final BsonValue value) {
+        doc.append(fieldName, getOperatorFilter("$lte",value));
         return this;
     }
 
-    public <TItem> FilterBuilder in(final String fieldName, final TItem... values) {
-        this.add(Filters.in(fieldName, values));
+    public <TItem> FilterBuilder in(final String fieldName, final BsonValue... values) {
+        doc.append(fieldName, getOperatorFilter("$in",values));
         return this;
     }
 
-    public <TItem> FilterBuilder in(final String fieldName, final Iterable<TItem> values) {
-        this.add(Filters.in(fieldName, values));
+    public <TItem> FilterBuilder in(final String fieldName, final Iterable<BsonValue> values) {
+        doc.append(fieldName, getOperatorFilter("$in",values));
         return this;
     }
 
-    public <TItem> FilterBuilder nin(final String fieldName, final TItem... values) {
-        this.add(Filters.nin(fieldName, values));
+    public <TItem> FilterBuilder nin(final String fieldName, final BsonValue... values) {
+        doc.append(fieldName, getOperatorFilter("$nin",values));
         return this;
     }
 
-    public <TItem> FilterBuilder nin(final String fieldName, final Iterable<TItem> values) {
-        this.add(Filters.nin(fieldName, values));
+    public <TItem> FilterBuilder nin(final String fieldName, final Iterable<BsonValue> values) {
+        doc.append(fieldName, getOperatorFilter("$nin",values));
         return this;
     }
 
-    public <TItem> FilterBuilder and(final Iterable<Bson> filters) {
-        this.add(Filters.and(filters));
+    public <TItem> FilterBuilder and(final Iterable<BsonValue> filters) {
+        doc.append("$and", toBsonArray(filters));
         return this;
     }
 
-    public <TItem> FilterBuilder and(final Bson... filters) {
-        this.add(Filters.and(filters));
+    public <TItem> FilterBuilder and(final BsonValue... filters) {
+        doc.append("$and", toBsonArray(filters));
         return this;
     }
 
-    public <TItem> FilterBuilder or(final Iterable<Bson> filters) {
-        this.add(Filters.or(filters));
+    public <TItem> FilterBuilder or(final Iterable<BsonValue> filters) {
+        doc.append("$or", toBsonArray(filters));
         return this;
     }
 
-    public <TItem> FilterBuilder or(final Bson... filters) {
-        this.add(Filters.or(filters));
+    public <TItem> FilterBuilder or(final BsonValue... filters) {
+        doc.append("$or", toBsonArray(filters));
         return this;
     }
 
-    public <TItem> FilterBuilder not(final Bson filter) {
-        this.add(Filters.not(filter));
+    public <TItem> FilterBuilder not(final BsonValue filter) {
+        doc.append("$not", filter);
         return this;
     }
 
-    public <TItem> FilterBuilder nor(final Bson... filters) {
-        this.add(Filters.nor(filters));
+    public <TItem> FilterBuilder nor(final BsonValue... filters) {
+        doc.append("$nor", toBsonArray(filters));
         return this;
     }
 
-    public <TItem> FilterBuilder nor(final Iterable<Bson> filters) {
-        this.add(Filters.nor(filters));
+    public <TItem> FilterBuilder nor(final Iterable<BsonValue> filters) {
+        doc.append("$nor", toBsonArray(filters));
         return this;
     }
 
-    //参考BsonValueCodecProvider
-    private <TItem> boolean checkClass(final TItem value) {
+    private BsonDocument getOperatorFilter(final String operatorName, final BsonValue value){
+        BsonDocument doc = new BsonDocument();
+        doc.append(operatorName, value);
+        return doc;
+    }
 
-        //BsonType.UNDEFINED
-        //参考BsonValueCodecProvider
-        Class c = value.getClass();
-        if (c == BsonString.class) {
+    private BsonDocument getOperatorFilter(final String operatorName, final BsonValue... values){
+        BsonDocument doc = new BsonDocument();
+        doc.append(operatorName, toBsonArray(values));
+        return doc;
+    }
 
-        } else if (c == BsonInt32.class) {
+    private BsonDocument getOperatorFilter(final String operatorName, final Iterable<BsonValue> values){
+        BsonDocument doc = new BsonDocument();
+        doc.append(operatorName, toBsonArray(values));
+        return doc;
+    }
 
-        } else {
+    private BsonArray toBsonArray(final BsonValue... values){
+        return new BsonArray(asList(values));
+    }
 
-        }
-
-
-        return false;
+    private BsonArray toBsonArray(final Iterable<BsonValue> values){
+        BsonArray array = new BsonArray();
+        values.forEach(array :: add);
+        return array;
     }
 
     @Override

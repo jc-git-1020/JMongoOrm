@@ -12,7 +12,7 @@ public class test1 {
 
         PersonDao dao = new PersonDao();
         FilterBuilder fb = new FilterBuilder();
-        fb.eq("name",new BsonString("aaa"));
+        fb.eq("name",new BsonString("aaaa"));
         Person p = dao.filter.find(fb).first();
 
         System.out.println( p.getName());

@@ -59,6 +59,22 @@ public class Person implements Bson {
         private String Monther;
         private String Fahter;
 
+        public String getMonther() {
+            return Monther;
+        }
+
+        public void setMonther(String monther) {
+            Monther = monther;
+        }
+
+        public String getFahter() {
+            return Fahter;
+        }
+
+        public void setFahter(String fahter) {
+            Fahter = fahter;
+        }
+
         public Family() {
         }
 
