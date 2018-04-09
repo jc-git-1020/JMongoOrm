@@ -26,77 +26,77 @@ public class FilterBuilder extends LinkedList<Bson> implements Bson {
         return this;
     }
 
-    public <TItem> FilterBuilder gt(final String fieldName, final BsonValue value) {
+    public FilterBuilder gt(final String fieldName, final BsonValue value) {
         doc.append(fieldName, getOperatorFilter("$gt",value));
         return this;
     }
 
-    public <TItem> FilterBuilder lt(final String fieldName, final BsonValue value) {
+    public FilterBuilder lt(final String fieldName, final BsonValue value) {
         doc.append(fieldName, getOperatorFilter("$lt",value));
         return this;
     }
 
-    public <TItem> FilterBuilder gte(final String fieldName, final BsonValue value) {
+    public FilterBuilder gte(final String fieldName, final BsonValue value) {
         doc.append(fieldName, getOperatorFilter("$gte",value));
         return this;
     }
 
-    public <TItem> FilterBuilder lte(final String fieldName, final BsonValue value) {
+    public FilterBuilder lte(final String fieldName, final BsonValue value) {
         doc.append(fieldName, getOperatorFilter("$lte",value));
         return this;
     }
 
-    public <TItem> FilterBuilder in(final String fieldName, final BsonValue... values) {
+    public FilterBuilder in(final String fieldName, final BsonValue... values) {
         doc.append(fieldName, getOperatorFilter("$in",values));
         return this;
     }
 
-    public <TItem> FilterBuilder in(final String fieldName, final Iterable<BsonValue> values) {
+    public FilterBuilder in(final String fieldName, final Iterable<BsonValue> values) {
         doc.append(fieldName, getOperatorFilter("$in",values));
         return this;
     }
 
-    public <TItem> FilterBuilder nin(final String fieldName, final BsonValue... values) {
+    public FilterBuilder nin(final String fieldName, final BsonValue... values) {
         doc.append(fieldName, getOperatorFilter("$nin",values));
         return this;
     }
 
-    public <TItem> FilterBuilder nin(final String fieldName, final Iterable<BsonValue> values) {
+    public FilterBuilder nin(final String fieldName, final Iterable<BsonValue> values) {
         doc.append(fieldName, getOperatorFilter("$nin",values));
         return this;
     }
 
-    public <TItem> FilterBuilder and(final Iterable<BsonValue> filters) {
+    public FilterBuilder and(final Iterable<BsonValue> filters) {
         doc.append("$and", toBsonArray(filters));
         return this;
     }
 
-    public <TItem> FilterBuilder and(final BsonValue... filters) {
+    public FilterBuilder and(final BsonValue... filters) {
         doc.append("$and", toBsonArray(filters));
         return this;
     }
 
-    public <TItem> FilterBuilder or(final Iterable<BsonValue> filters) {
+    public FilterBuilder or(final Iterable<BsonValue> filters) {
         doc.append("$or", toBsonArray(filters));
         return this;
     }
 
-    public <TItem> FilterBuilder or(final BsonValue... filters) {
+    public FilterBuilder or(final BsonValue... filters) {
         doc.append("$or", toBsonArray(filters));
         return this;
     }
 
-    public <TItem> FilterBuilder not(final BsonValue filter) {
+    public FilterBuilder not(final BsonValue filter) {
         doc.append("$not", filter);
         return this;
     }
 
-    public <TItem> FilterBuilder nor(final BsonValue... filters) {
+    public FilterBuilder nor(final BsonValue... filters) {
         doc.append("$nor", toBsonArray(filters));
         return this;
     }
 
-    public <TItem> FilterBuilder nor(final Iterable<BsonValue> filters) {
+    public FilterBuilder nor(final Iterable<BsonValue> filters) {
         doc.append("$nor", toBsonArray(filters));
         return this;
     }
