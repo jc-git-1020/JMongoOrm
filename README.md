@@ -11,3 +11,4 @@ mongodb-orm-generator
  文件定义数据。
 
 4，异步驱动导致代码太过复杂，不建议使用。
+5，嵌套的类，使用bsondocument，然后反射生成对象
