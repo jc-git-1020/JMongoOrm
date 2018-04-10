@@ -22,6 +22,7 @@ public class UpdateBuilder implements Bson {
     BsonDocument maxDoc;
     BsonDocument currentDateDoc;
     BsonDocument addToSetDoc;
+    BsonDocument pushDoc;
 
     public UpdateBuilder() {
         doc = new BsonDocument();
@@ -213,6 +214,13 @@ public class UpdateBuilder implements Bson {
         return this;
     }
 
+    public UpdateBuilder push(final String fieldName, final BsonValue value){
+        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+        newOneIfNull(pushDoc);
+        pushDoc.append(fieldName,value);
+        return this;
+    }
+
 
 
     public UpdateBuilder clear(){
@@ -228,6 +236,7 @@ public class UpdateBuilder implements Bson {
         clearIfNotNull(maxDoc);
         clearIfNotNull(currentDateDoc);
         clearIfNotNull(addToSetDoc);
+        clearIfNotNull(pushDoc);
         return this;
     }
 
@@ -238,7 +247,8 @@ public class UpdateBuilder implements Bson {
     }
 
     private void clearIfNotNull(BsonDocument doc){
-        doc.clear();
+        if(doc != null)
+            doc.clear();
     }
 
     @Override
