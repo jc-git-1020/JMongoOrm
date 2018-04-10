@@ -13,19 +13,19 @@ public class SortBuilder implements Bson {
         doc = new BsonDocument();
     }
 
-    public SortBuilder ascending(final String fieldName){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public SortBuilder ascending(final String fieldName) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         doc.append(fieldName, new BsonInt32(1));
         return this;
     }
 
-    public SortBuilder descending(final String fieldName){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public SortBuilder descending(final String fieldName) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         doc.append(fieldName, new BsonInt32(-1));
         return this;
     }
 
-    public SortBuilder clear(){
+    public SortBuilder clear() {
         doc.clear();
         return this;
     }
@@ -35,7 +35,7 @@ public class SortBuilder implements Bson {
         return doc;
     }
 
-    public String toJson(){
+    public String toJson() {
         return doc.toJson();
     }
 

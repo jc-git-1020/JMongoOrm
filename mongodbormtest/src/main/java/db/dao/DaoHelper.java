@@ -21,10 +21,9 @@ public final class DaoHelper {
     private final static MongoDatabase database = mongoClient.getDatabase(databaseName);
 
 
-    public static MongoCollection getCollection(String name,Class c) {
-        return database.getCollection(name,c);
+    public static MongoCollection getCollection(String name, Class c) {
+        return database.getCollection(name, c);
     }
-
 
 
 }

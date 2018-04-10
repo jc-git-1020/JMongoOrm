@@ -17,62 +17,62 @@ public class FilterBuilder implements Bson {
     }
 
     public FilterBuilder eq(final String fieldName, final BsonValue value) {
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         doc.append(fieldName, value);
         return this;
     }
 
     public FilterBuilder ne(final String fieldName, final BsonValue value) {
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
-        doc.append(fieldName, getOperatorFilter("$ne",value));
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
+        doc.append(fieldName, getOperatorFilter("$ne", value));
         return this;
     }
 
     public FilterBuilder gt(final String fieldName, final BsonValue value) {
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
-        doc.append(fieldName, getOperatorFilter("$gt",value));
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
+        doc.append(fieldName, getOperatorFilter("$gt", value));
         return this;
     }
 
     public FilterBuilder lt(final String fieldName, final BsonValue value) {
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
-        doc.append(fieldName, getOperatorFilter("$lt",value));
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
+        doc.append(fieldName, getOperatorFilter("$lt", value));
         return this;
     }
 
     public FilterBuilder gte(final String fieldName, final BsonValue value) {
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
-        doc.append(fieldName, getOperatorFilter("$gte",value));
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
+        doc.append(fieldName, getOperatorFilter("$gte", value));
         return this;
     }
 
     public FilterBuilder lte(final String fieldName, final BsonValue value) {
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
-        doc.append(fieldName, getOperatorFilter("$lte",value));
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
+        doc.append(fieldName, getOperatorFilter("$lte", value));
         return this;
     }
 
     public FilterBuilder in(final String fieldName, final BsonValue... values) {
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
-        doc.append(fieldName, getOperatorFilter("$in",values));
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
+        doc.append(fieldName, getOperatorFilter("$in", values));
         return this;
     }
 
     public FilterBuilder in(final String fieldName, final Iterable<BsonValue> values) {
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
-        doc.append(fieldName, getOperatorFilter("$in",values));
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
+        doc.append(fieldName, getOperatorFilter("$in", values));
         return this;
     }
 
     public FilterBuilder nin(final String fieldName, final BsonValue... values) {
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
-        doc.append(fieldName, getOperatorFilter("$nin",values));
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
+        doc.append(fieldName, getOperatorFilter("$nin", values));
         return this;
     }
 
     public FilterBuilder nin(final String fieldName, final Iterable<BsonValue> values) {
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
-        doc.append(fieldName, getOperatorFilter("$nin",values));
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
+        doc.append(fieldName, getOperatorFilter("$nin", values));
         return this;
     }
 
@@ -111,43 +111,42 @@ public class FilterBuilder implements Bson {
         return this;
     }
 
-    public FilterBuilder clear(){
+    public FilterBuilder clear() {
         doc.clear();
         return this;
     }
 
-    private void notNullOrEmpty(final String fieldName){
-        if(fieldName == null || fieldName.isEmpty() )
+    private void notNullOrEmpty(final String fieldName) {
+        if (fieldName == null || fieldName.isEmpty())
             throw new IllegalArgumentException("fieldName can not be null or empty");
     }
 
-    private BsonDocument getOperatorFilter(final String operatorName, final BsonValue value){
+    private BsonDocument getOperatorFilter(final String operatorName, final BsonValue value) {
         BsonDocument doc = new BsonDocument();
         doc.append(operatorName, value);
         return doc;
     }
 
-    private BsonDocument getOperatorFilter(final String operatorName, final BsonValue... values){
+    private BsonDocument getOperatorFilter(final String operatorName, final BsonValue... values) {
         BsonDocument doc = new BsonDocument();
         doc.append(operatorName, toBsonArray(values));
         return doc;
     }
 
-    private BsonDocument getOperatorFilter(final String operatorName, final Iterable<BsonValue> values){
+    private BsonDocument getOperatorFilter(final String operatorName, final Iterable<BsonValue> values) {
         BsonDocument doc = new BsonDocument();
         doc.append(operatorName, toBsonArray(values));
         return doc;
     }
 
 
-
-    private BsonArray toBsonArray(final BsonValue... values){
+    private BsonArray toBsonArray(final BsonValue... values) {
         return new BsonArray(asList(values));
     }
 
-    private BsonArray toBsonArray(final Iterable<BsonValue> values){
+    private BsonArray toBsonArray(final Iterable<BsonValue> values) {
         BsonArray array = new BsonArray();
-        values.forEach(array :: add);
+        values.forEach(array::add);
         return array;
     }
 
@@ -156,7 +155,7 @@ public class FilterBuilder implements Bson {
         return doc;
     }
 
-    public String toJson(){
+    public String toJson() {
         return doc.toJson();
     }
 

@@ -33,208 +33,208 @@ public class UpdateBuilder implements Bson {
         doc = new BsonDocument();
     }
 
-    public UpdateBuilder set(final String fieldName, final BsonValue value){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder set(final String fieldName, final BsonValue value) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         newIfNull(setDoc);
-        setDoc.append(fieldName,value);
+        setDoc.append(fieldName, value);
         return this;
     }
 
-    public UpdateBuilder unset(final String fieldName, final BsonValue value){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder unset(final String fieldName, final BsonValue value) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         newIfNull(unsetDoc);
-        unsetDoc.append(fieldName,value);
+        unsetDoc.append(fieldName, value);
         return this;
     }
 
-    public UpdateBuilder setOnInsert(final String fieldName, final BsonValue value){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder setOnInsert(final String fieldName, final BsonValue value) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         newIfNull(setOnInsertDoc);
-        setOnInsertDoc.append(fieldName,value);
+        setOnInsertDoc.append(fieldName, value);
         return this;
     }
 
-    public UpdateBuilder rename(final String fieldName, final String newFieldName){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
-        Utilities.stringNotNullOrEmpty("newFieldName",newFieldName);
+    public UpdateBuilder rename(final String fieldName, final String newFieldName) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
+        Utilities.stringNotNullOrEmpty("newFieldName", newFieldName);
         newIfNull(renameDoc);
-        renameDoc.append(fieldName,new BsonString(newFieldName));
+        renameDoc.append(fieldName, new BsonString(newFieldName));
         return this;
     }
 
-    public UpdateBuilder inc(final String fieldName, final int number){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder inc(final String fieldName, final int number) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         notNull("number", number);
         newIfNull(incDoc);
-        incDoc.append(fieldName,new BsonInt32(number));
+        incDoc.append(fieldName, new BsonInt32(number));
         return this;
     }
 
-    public UpdateBuilder inc(final String fieldName, final long number){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder inc(final String fieldName, final long number) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         notNull("number", number);
         newIfNull(incDoc);
-        incDoc.append(fieldName,new BsonInt64(number));
+        incDoc.append(fieldName, new BsonInt64(number));
         return this;
     }
 
-    public UpdateBuilder inc(final String fieldName, final double number){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder inc(final String fieldName, final double number) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         notNull("number", number);
         newIfNull(incDoc);
-        incDoc.append(fieldName,new BsonDouble(number));
+        incDoc.append(fieldName, new BsonDouble(number));
         return this;
     }
 
-    public UpdateBuilder inc(final String fieldName, final Decimal128 number){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder inc(final String fieldName, final Decimal128 number) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         notNull("number", number);
         newIfNull(incDoc);
-        incDoc.append(fieldName,new BsonDecimal128(number));
+        incDoc.append(fieldName, new BsonDecimal128(number));
         return this;
     }
 
-    public UpdateBuilder mul(final String fieldName, final int number){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder mul(final String fieldName, final int number) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         notNull("number", number);
         newIfNull(mulDoc);
-        mulDoc.append(fieldName,new BsonInt32(number));
+        mulDoc.append(fieldName, new BsonInt32(number));
         return this;
     }
 
-    public UpdateBuilder mul(final String fieldName, final long number){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder mul(final String fieldName, final long number) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         notNull("number", number);
         newIfNull(mulDoc);
-        mulDoc.append(fieldName,new BsonInt64(number));
+        mulDoc.append(fieldName, new BsonInt64(number));
         return this;
     }
 
-    public UpdateBuilder mul(final String fieldName, final double number){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder mul(final String fieldName, final double number) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         notNull("number", number);
         newIfNull(mulDoc);
-        mulDoc.append(fieldName,new BsonDouble(number));
+        mulDoc.append(fieldName, new BsonDouble(number));
         return this;
     }
 
-    public UpdateBuilder mul(final String fieldName, final Decimal128 number){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder mul(final String fieldName, final Decimal128 number) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         notNull("number", number);
         newIfNull(mulDoc);
-        mulDoc.append(fieldName,new BsonDecimal128(number));
+        mulDoc.append(fieldName, new BsonDecimal128(number));
         return this;
     }
 
-    public UpdateBuilder min(final String fieldName, final int number){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder min(final String fieldName, final int number) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         notNull("number", number);
         newIfNull(minDoc);
-        minDoc.append(fieldName,new BsonInt32(number));
+        minDoc.append(fieldName, new BsonInt32(number));
         return this;
     }
 
-    public UpdateBuilder min(final String fieldName, final long number){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder min(final String fieldName, final long number) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         notNull("number", number);
         newIfNull(minDoc);
-        minDoc.append(fieldName,new BsonInt64(number));
+        minDoc.append(fieldName, new BsonInt64(number));
         return this;
     }
 
-    public UpdateBuilder min(final String fieldName, final double number){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder min(final String fieldName, final double number) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         notNull("number", number);
         newIfNull(minDoc);
-        minDoc.append(fieldName,new BsonDouble(number));
+        minDoc.append(fieldName, new BsonDouble(number));
         return this;
     }
 
-    public UpdateBuilder min(final String fieldName, final Decimal128 number){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder min(final String fieldName, final Decimal128 number) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         notNull("number", number);
         newIfNull(minDoc);
-        minDoc.append(fieldName,new BsonDecimal128(number));
+        minDoc.append(fieldName, new BsonDecimal128(number));
         return this;
     }
 
-    public UpdateBuilder max(final String fieldName, final int number){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder max(final String fieldName, final int number) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         notNull("number", number);
         newIfNull(maxDoc);
-        maxDoc.append(fieldName,new BsonInt32(number));
+        maxDoc.append(fieldName, new BsonInt32(number));
         return this;
     }
 
-    public UpdateBuilder max(final String fieldName, final long number){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder max(final String fieldName, final long number) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         notNull("number", number);
         newIfNull(maxDoc);
-        maxDoc.append(fieldName,new BsonInt64(number));
+        maxDoc.append(fieldName, new BsonInt64(number));
         return this;
     }
 
-    public UpdateBuilder max(final String fieldName, final double number){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder max(final String fieldName, final double number) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         notNull("number", number);
         newIfNull(maxDoc);
-        maxDoc.append(fieldName,new BsonDouble(number));
+        maxDoc.append(fieldName, new BsonDouble(number));
         return this;
     }
 
-    public UpdateBuilder max(final String fieldName, final Decimal128 number){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder max(final String fieldName, final Decimal128 number) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         notNull("number", number);
         newIfNull(maxDoc);
-        maxDoc.append(fieldName,new BsonDecimal128(number));
+        maxDoc.append(fieldName, new BsonDecimal128(number));
         return this;
     }
 
-    public UpdateBuilder currentDate(final String fieldName){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder currentDate(final String fieldName) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         newIfNull(currentDateDoc);
-        currentDateDoc.append(fieldName,new BsonBoolean(true));
+        currentDateDoc.append(fieldName, new BsonBoolean(true));
         return this;
     }
 
-    public UpdateBuilder currentTimestamp(final String fieldName){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder currentTimestamp(final String fieldName) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         newIfNull(currentDateDoc);
-        currentDateDoc.append(fieldName,new BsonDocument("$type", new BsonString("timestamp")));
+        currentDateDoc.append(fieldName, new BsonDocument("$type", new BsonString("timestamp")));
         return this;
     }
 
-    public UpdateBuilder addToSet(final String fieldName, final BsonValue value){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder addToSet(final String fieldName, final BsonValue value) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         newIfNull(addToSetDoc);
-        notNull("value",value);
-        addToSetDoc.append(fieldName,value);
+        notNull("value", value);
+        addToSetDoc.append(fieldName, value);
         return this;
     }
 
-    public UpdateBuilder addEachToSet(final String fieldName, final List<BsonValue> values){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder addEachToSet(final String fieldName, final List<BsonValue> values) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         newIfNull(addToSetDoc);
-        addToSetDoc.append(fieldName,new BsonArray(values));
+        addToSetDoc.append(fieldName, new BsonArray(values));
         return this;
     }
 
-    public UpdateBuilder push(final String fieldName, final BsonValue value){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder push(final String fieldName, final BsonValue value) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         newIfNull(pushDoc);
-        pushDoc.append(fieldName,value);
+        pushDoc.append(fieldName, value);
         return this;
     }
 
-    public UpdateBuilder pushEach(final String fieldName, final List<BsonValue> values){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder pushEach(final String fieldName, final List<BsonValue> values) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         newIfNull(pushDoc);
-        pushDoc.append(fieldName,new BsonDocument("$each", new BsonArray(values)));
+        pushDoc.append(fieldName, new BsonDocument("$each", new BsonArray(values)));
         return this;
     }
 
-    public UpdateBuilder pushEach(final String fieldName, final List<BsonValue> values, final PushOptions options){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder pushEach(final String fieldName, final List<BsonValue> values, final PushOptions options) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         newIfNull(pushDoc);
         BsonDocument temp = new BsonDocument();
         temp.append("$each", new BsonArray(values));
@@ -243,84 +243,84 @@ public class UpdateBuilder implements Bson {
         if (options.getSlice() != null)
             temp.append("$slice", new BsonInt32(options.getSlice()));
         if (options.getSort() != null)
-            temp.append("$sort",  new BsonInt32(options.getSort()));
-        else if(options.getSortDocument() != null)
-            temp.append("$sort",  (BsonValue) options.getSortDocument());
-        pushDoc.append(fieldName,temp);
+            temp.append("$sort", new BsonInt32(options.getSort()));
+        else if (options.getSortDocument() != null)
+            temp.append("$sort", (BsonValue) options.getSortDocument());
+        pushDoc.append(fieldName, temp);
         return this;
     }
 
-    public UpdateBuilder pull(final String fieldName, final BsonValue value){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder pull(final String fieldName, final BsonValue value) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         newIfNull(pullDoc);
-        pullDoc.append(fieldName,value);
+        pullDoc.append(fieldName, value);
         return this;
     }
 
-    public UpdateBuilder pullAll(final String fieldName, final List<BsonValue> values){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder pullAll(final String fieldName, final List<BsonValue> values) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         newIfNull(pullAllDoc);
-        pullAllDoc.append(fieldName,new BsonArray(values));
+        pullAllDoc.append(fieldName, new BsonArray(values));
         return this;
     }
 
-    public UpdateBuilder popFirst(final String fieldName){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder popFirst(final String fieldName) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         newIfNull(popDoc);
-        popDoc.append(fieldName,new BsonInt32(1));
+        popDoc.append(fieldName, new BsonInt32(1));
         return this;
     }
 
-    public UpdateBuilder popLast(final String fieldName){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder popLast(final String fieldName) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         newIfNull(popDoc);
-        popDoc.append(fieldName,new BsonInt32(-1));
+        popDoc.append(fieldName, new BsonInt32(-1));
         return this;
     }
 
-    public UpdateBuilder bitwiseAnd(final String fieldName,final int value){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder bitwiseAnd(final String fieldName, final int value) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         newIfNull(bitwiseDoc);
-        bitwiseDoc.append(fieldName,new BsonDocument("$and", new BsonInt32(value)));
+        bitwiseDoc.append(fieldName, new BsonDocument("$and", new BsonInt32(value)));
         return this;
     }
 
-    public UpdateBuilder bitwiseAnd(final String fieldName,final long value){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder bitwiseAnd(final String fieldName, final long value) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         newIfNull(bitwiseDoc);
-        bitwiseDoc.append(fieldName,new BsonDocument("$and", new BsonInt64(value)));
+        bitwiseDoc.append(fieldName, new BsonDocument("$and", new BsonInt64(value)));
         return this;
     }
 
-    public UpdateBuilder bitwiseOr(final String fieldName,final int value){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder bitwiseOr(final String fieldName, final int value) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         newIfNull(bitwiseDoc);
-        bitwiseDoc.append(fieldName,new BsonDocument("$or", new BsonInt32(value)));
+        bitwiseDoc.append(fieldName, new BsonDocument("$or", new BsonInt32(value)));
         return this;
     }
 
-    public UpdateBuilder bitwiseOr(final String fieldName,final long value){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder bitwiseOr(final String fieldName, final long value) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         newIfNull(bitwiseDoc);
-        bitwiseDoc.append(fieldName,new BsonDocument("$or", new BsonInt64(value)));
+        bitwiseDoc.append(fieldName, new BsonDocument("$or", new BsonInt64(value)));
         return this;
     }
 
-    public UpdateBuilder bitwiseXor(final String fieldName,final int value){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder bitwiseXor(final String fieldName, final int value) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         newIfNull(bitwiseDoc);
-        bitwiseDoc.append(fieldName,new BsonDocument("$xor", new BsonInt32(value)));
+        bitwiseDoc.append(fieldName, new BsonDocument("$xor", new BsonInt32(value)));
         return this;
     }
 
-    public UpdateBuilder bitwiseXor(final String fieldName,final long value){
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+    public UpdateBuilder bitwiseXor(final String fieldName, final long value) {
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         newIfNull(bitwiseDoc);
-        bitwiseDoc.append(fieldName,new BsonDocument("$xor", new BsonInt64(value)));
+        bitwiseDoc.append(fieldName, new BsonDocument("$xor", new BsonInt64(value)));
         return this;
     }
 
-    public UpdateBuilder clear(){
+    public UpdateBuilder clear() {
         doc.clear();
         clearIfNotNull(setDoc);
         clearIfNotNull(setDoc);
@@ -341,14 +341,14 @@ public class UpdateBuilder implements Bson {
         return this;
     }
 
-    private BsonDocument newIfNull(BsonDocument doc){
-        if(doc != null)
+    private BsonDocument newIfNull(BsonDocument doc) {
+        if (doc != null)
             doc = new BsonDocument();
         return doc;
     }
 
-    private void clearIfNotNull(BsonDocument doc){
-        if(doc != null)
+    private void clearIfNotNull(BsonDocument doc) {
+        if (doc != null)
             doc.clear();
     }
 
@@ -357,7 +357,7 @@ public class UpdateBuilder implements Bson {
         return doc;
     }
 
-    public String toJson(){
+    public String toJson() {
         return doc.toJson();
     }
 

@@ -14,18 +14,18 @@ public class ProjectBuilder implements Bson {
     }
 
     public ProjectBuilder project(final String fieldName) {
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         doc.append(fieldName, new BsonInt32(1));
         return this;
     }
 
     public ProjectBuilder exclude(final String fieldName) {
-        Utilities.stringNotNullOrEmpty("fieldName",fieldName);
+        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
         doc.append(fieldName, new BsonInt32(0));
         return this;
     }
 
-    public ProjectBuilder clear(){
+    public ProjectBuilder clear() {
         doc.clear();
         return this;
     }
@@ -35,7 +35,7 @@ public class ProjectBuilder implements Bson {
         return doc;
     }
 
-    public String toJson(){
+    public String toJson() {
         return doc.toJson();
     }
 
