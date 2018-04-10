@@ -1,11 +1,8 @@
 package db.model;
 
-import org.bson.BsonDocument;
-import org.bson.codecs.configuration.CodecRegistry;
-import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
-public class Person implements Bson {
+public class Person {
     private ObjectId id;
     private String name;
 
@@ -45,7 +42,6 @@ public class Person implements Bson {
     private Family family;
 
     public Person() {
-
     }
 
     public Person(String name, int age, Family family) {
@@ -55,39 +51,30 @@ public class Person implements Bson {
         this.family = family;
     }
 
-    private class Family {
-        private String Monther;
-        private String Fahter;
+    public static class Family {
+        public Person monther;
+        public Person father;
 
-        public String getMonther() {
-            return Monther;
+        public Family(Person monther, Person father) {
+            this.monther = monther;
+            this.father = father;
         }
 
-        public void setMonther(String monther) {
-            Monther = monther;
+        public Person getMonther() {
+            return monther;
         }
 
-        public String getFahter() {
-            return Fahter;
+        public void setMonther(Person monther) {
+            this.monther = monther;
         }
 
-        public void setFahter(String fahter) {
-            Fahter = fahter;
+        public Person getFather() {
+            return father;
         }
 
-        public Family() {
+        public void setFather(Person father) {
+            this.father = father;
         }
-
-        public Family(String monther, String fahter) {
-            Monther = monther;
-            Fahter = fahter;
-        }
-    }
-
-    //todo 补充doc的生成
-    @Override
-    public <TDocument> BsonDocument toBsonDocument(Class<TDocument> tDocumentClass, CodecRegistry codecRegistry) {
-        return null;
     }
 
 }
