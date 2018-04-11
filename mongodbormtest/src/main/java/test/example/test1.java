@@ -3,6 +3,8 @@ package test.example;
 import db.common.FilterBuilder;
 import db.dao.PersonDao;
 import db.model.Person;
+import db.model.Person_Family;
+import org.bson.BsonDocument;
 import org.bson.BsonString;
 
 public class test1 {
@@ -11,23 +13,20 @@ public class test1 {
     {
         PersonDao dao = new PersonDao();
 
+        BsonDocument doc = new BsonDocument();
+
+        Person_Family family = new Person_Family("m","f");
         Person person = new Person();
         person.setAge(1);
         person.setName("aaaa");
-        Person mother = new Person();
-        mother.setAge(2);
-        mother.setName("bbb");
-        Person father = new Person();
-        father.setAge(3);
-        father.setName("ccc");
-        Person.Family family = new Person.Family(mother,father);
+        person.setFamily(family);
         dao.insertOne(person);
 
         FilterBuilder fb = new FilterBuilder();
         fb.eq("name",new BsonString("aaaa"));
-        Person p = dao.filter.find(fb).first();
+        //Person p = dao.filter.find(fb).first();
 
-        System.out.println( p.getName());
+        //System.out.println( p.getName());
         System.out.println( "Hello World!" );
 
 

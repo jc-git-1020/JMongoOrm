@@ -1,10 +1,31 @@
 package db.model;
 
+import db.common.Model;
+import org.bson.BsonInt32;
+import org.bson.BsonObjectId;
+import org.bson.BsonString;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
-public class Person {
+public class Person extends Model {
     private ObjectId id;
     private String name;
+    private int age;
+    private Person_Family family;
+
+    public Person() {
+    }
+
+    public Person(Document doc) {
+
+    }
+
+    public Person(ObjectId id, String name, int age, Person_Family family) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.family = family;
+    }
 
     public ObjectId getId() {
         return id;
@@ -30,51 +51,21 @@ public class Person {
         this.age = age;
     }
 
-    public Family getFamily() {
+    public Person_Family getFamily() {
         return family;
     }
 
-    public void setFamily(Family family) {
+    public void setFamily(Person_Family family) {
         this.family = family;
     }
 
-    private int age;
-    private Family family;
-
-    public Person() {
-    }
-
-    public Person(String name, int age, Family family) {
-        this.id = new ObjectId();
-        this.name = name;
-        this.age = age;
-        this.family = family;
-    }
-
-    public static class Family {
-        public Person monther;
-        public Person father;
-
-        public Family(Person monther, Person father) {
-            this.monther = monther;
-            this.father = father;
-        }
-
-        public Person getMonther() {
-            return monther;
-        }
-
-        public void setMonther(Person monther) {
-            this.monther = monther;
-        }
-
-        public Person getFather() {
-            return father;
-        }
-
-        public void setFather(Person father) {
-            this.father = father;
-        }
+    public Document toDocument() {
+        Document doc = new Document();
+        doc.append("_id",new BsonObjectId(id));
+        doc.append("name",new BsonString(name));
+        doc.append("age",new BsonInt32(age));
+        doc.append("family",family.toDocument());
+        return doc;
     }
 
 }

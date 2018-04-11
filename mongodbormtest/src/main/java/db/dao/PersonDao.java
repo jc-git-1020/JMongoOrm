@@ -5,6 +5,7 @@ import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import db.model.Person;
 import org.bson.BsonDocument;
+import org.bson.Document;
 import org.bson.conversions.Bson;
 
 import java.util.ArrayList;
@@ -14,11 +15,11 @@ import java.util.List;
 public class PersonDao {
 
     private final static String collectionName = "person";
-    private final MongoCollection<Person> collection;
+    private final MongoCollection<Document> collection;
     public final Filter filter;
 
     public PersonDao() {
-        collection = DaoHelper.getCollection(collectionName, Person.class);
+        collection = DaoHelper.getCollection(collectionName);
         filter = new Filter();
     }
 
@@ -38,15 +39,15 @@ public class PersonDao {
         return collection.updateMany(filter, update);
     }
 
-    public Person findOneAndDelete(final Bson filter) {
+    public Document findOneAndDelete(final Bson filter) {
         return collection.findOneAndDelete(filter);
     }
 
-    public Person findOneAndReplace(final Bson filter, final Person person) {
+    public Document findOneAndReplace(final Bson filter, final Document person) {
         return collection.findOneAndReplace(filter, person);
     }
 
-    public Person findOneAndUpdate(final Bson filter, final Bson update) {
+    public Document findOneAndUpdate(final Bson filter, final Bson update) {
         return collection.findOneAndUpdate(filter, update);
     }
 
@@ -66,11 +67,15 @@ public class PersonDao {
     }
 
     public void insertOne(final Person person) {
-        collection.insertOne(person);
+        collection.insertOne(person.toDocument());
     }
 
     public void insertMany(final List<Person> persons) {
-        collection.insertMany(persons);
+        List<Document> list = new ArrayList();
+        for (Person person:persons) {
+            list.add(person.toDocument());
+        }
+        collection.insertMany(list);
     }
 
     public DeleteResult deleteOne(final Bson filter) {
@@ -81,7 +86,7 @@ public class PersonDao {
         return collection.deleteMany(filter);
     }
 
-    public UpdateResult replaceOne(final Bson filter, final Person replacement) {
+    public UpdateResult replaceOne(final Bson filter, final Document replacement) {
         return collection.replaceOne(filter, replacement);
     }
 
@@ -105,7 +110,7 @@ public class PersonDao {
     //参考FindIterableImpl
     public class Filter {
 
-        FindIterable<Person> iterable;
+        FindIterable<Document> iterable;
 
         public Filter() {
             iterable = collection.find(new BsonDocument());
@@ -136,11 +141,11 @@ public class PersonDao {
             return this;
         }
 
-        public Person first() {
+        public Document first() {
             return iterable.first();
         }
 
-        public List<Person> list() {
+        public List<Document> list() {
             return toList(iterable);
         }
     }
