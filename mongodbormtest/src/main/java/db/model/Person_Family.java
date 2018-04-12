@@ -1,6 +1,6 @@
 package db.model;
 
-import db.common.Model;
+import db.core.Model;
 import org.bson.BsonString;
 import org.bson.Document;
 
@@ -42,8 +42,7 @@ public class Person_Family implements Model {
     }
 
     @Override
-    public Model toModel(Document doc) {
-        Person_Family family = new Person_Family();
-        return family;
+    public String toString() {
+        return toDocument().toJson();
     }
 }

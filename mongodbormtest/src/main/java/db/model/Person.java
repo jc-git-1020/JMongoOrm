@@ -1,13 +1,13 @@
 package db.model;
 
-import db.common.Model;
+import db.core.Model;
 import org.bson.BsonInt32;
 import org.bson.BsonObjectId;
 import org.bson.BsonString;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-public class Person extends Model {
+public class Person implements Model {
     private ObjectId id;
     private String name;
     private int age;
@@ -16,8 +16,8 @@ public class Person extends Model {
     public Person() {
     }
 
-    public Person(Document doc) {
-
+    public boolean isNew(){
+        return id == null;
     }
 
     public Person(ObjectId id, String name, int age, Person_Family family) {
@@ -59,13 +59,19 @@ public class Person extends Model {
         this.family = family;
     }
 
+    @Override
     public Document toDocument() {
         Document doc = new Document();
-        doc.append("_id",new BsonObjectId(id));
+        if(!isNew())
+            doc.append("_id",new BsonObjectId(id));
         doc.append("name",new BsonString(name));
         doc.append("age",new BsonInt32(age));
         doc.append("family",family.toDocument());
         return doc;
     }
 
+    @Override
+    public String toString() {
+        return toDocument().toJson();
+    }
 }

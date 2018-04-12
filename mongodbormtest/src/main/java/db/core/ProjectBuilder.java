@@ -1,31 +1,31 @@
-package db.common;
+package db.core;
 
 import org.bson.BsonDocument;
 import org.bson.BsonInt32;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.conversions.Bson;
 
-public class SortBuilder implements Bson {
+public class ProjectBuilder implements Bson {
 
     BsonDocument doc;
 
-    public SortBuilder() {
+    public ProjectBuilder() {
         doc = new BsonDocument();
     }
 
-    public SortBuilder ascending(final String fieldName) {
-        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
+    public ProjectBuilder project(final String fieldName) {
+        StringHelper.notNullOrEmpty("fieldName", fieldName);
         doc.append(fieldName, new BsonInt32(1));
         return this;
     }
 
-    public SortBuilder descending(final String fieldName) {
-        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
-        doc.append(fieldName, new BsonInt32(-1));
+    public ProjectBuilder exclude(final String fieldName) {
+        StringHelper.notNullOrEmpty("fieldName", fieldName);
+        doc.append(fieldName, new BsonInt32(0));
         return this;
     }
 
-    public SortBuilder clear() {
+    public ProjectBuilder clear() {
         doc.clear();
         return this;
     }

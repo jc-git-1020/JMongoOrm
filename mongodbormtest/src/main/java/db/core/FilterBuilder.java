@@ -1,4 +1,4 @@
-package db.common;
+package db.core;
 
 import org.bson.BsonArray;
 import org.bson.BsonDocument;
@@ -17,61 +17,61 @@ public class FilterBuilder implements Bson {
     }
 
     public FilterBuilder eq(final String fieldName, final BsonValue value) {
-        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
+        StringHelper.notNullOrEmpty("fieldName", fieldName);
         doc.append(fieldName, value);
         return this;
     }
 
     public FilterBuilder ne(final String fieldName, final BsonValue value) {
-        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
+        StringHelper.notNullOrEmpty("fieldName", fieldName);
         doc.append(fieldName, getOperatorFilter("$ne", value));
         return this;
     }
 
     public FilterBuilder gt(final String fieldName, final BsonValue value) {
-        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
+        StringHelper.notNullOrEmpty("fieldName", fieldName);
         doc.append(fieldName, getOperatorFilter("$gt", value));
         return this;
     }
 
     public FilterBuilder lt(final String fieldName, final BsonValue value) {
-        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
+        StringHelper.notNullOrEmpty("fieldName", fieldName);
         doc.append(fieldName, getOperatorFilter("$lt", value));
         return this;
     }
 
     public FilterBuilder gte(final String fieldName, final BsonValue value) {
-        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
+        StringHelper.notNullOrEmpty("fieldName", fieldName);
         doc.append(fieldName, getOperatorFilter("$gte", value));
         return this;
     }
 
     public FilterBuilder lte(final String fieldName, final BsonValue value) {
-        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
+        StringHelper.notNullOrEmpty("fieldName", fieldName);
         doc.append(fieldName, getOperatorFilter("$lte", value));
         return this;
     }
 
     public FilterBuilder in(final String fieldName, final BsonValue... values) {
-        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
+        StringHelper.notNullOrEmpty("fieldName", fieldName);
         doc.append(fieldName, getOperatorFilter("$in", values));
         return this;
     }
 
     public FilterBuilder in(final String fieldName, final Iterable<BsonValue> values) {
-        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
+        StringHelper.notNullOrEmpty("fieldName", fieldName);
         doc.append(fieldName, getOperatorFilter("$in", values));
         return this;
     }
 
     public FilterBuilder nin(final String fieldName, final BsonValue... values) {
-        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
+        StringHelper.notNullOrEmpty("fieldName", fieldName);
         doc.append(fieldName, getOperatorFilter("$nin", values));
         return this;
     }
 
     public FilterBuilder nin(final String fieldName, final Iterable<BsonValue> values) {
-        Utilities.stringNotNullOrEmpty("fieldName", fieldName);
+        StringHelper.notNullOrEmpty("fieldName", fieldName);
         doc.append(fieldName, getOperatorFilter("$nin", values));
         return this;
     }

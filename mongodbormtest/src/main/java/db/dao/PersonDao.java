@@ -3,6 +3,8 @@ package db.dao;
 import com.mongodb.client.*;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
+import db.core.DaoHelper;
+import db.core.ReflectHelper;
 import db.model.Person;
 import org.bson.BsonDocument;
 import org.bson.Document;
@@ -14,7 +16,8 @@ import java.util.List;
 //MongoCollectionImpl
 public class PersonDao {
 
-    private final static String collectionName = "person";
+    private final String collectionName = "person";
+    private final String classPrefix = "";
     private final MongoCollection<Document> collection;
     public final Filter filter;
 
@@ -141,8 +144,9 @@ public class PersonDao {
             return this;
         }
 
-        public Document first() {
-            return iterable.first();
+        public Person first() {
+            Document doc = iterable.first();
+            return (Person) ReflectHelper.create(this.getClass().getName(),doc);
         }
 
         public List<Document> list() {

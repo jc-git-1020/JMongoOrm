@@ -1,6 +1,6 @@
 package test.example;
 
-import db.common.FilterBuilder;
+import db.core.FilterBuilder;
 import db.dao.PersonDao;
 import db.model.Person;
 import db.model.Person_Family;
@@ -24,9 +24,9 @@ public class test1 {
 
         FilterBuilder fb = new FilterBuilder();
         fb.eq("name",new BsonString("aaaa"));
-        //Person p = dao.filter.find(fb).first();
+        Person p = dao.filter.find(fb).first();
 
-        //System.out.println( p.getName());
+        System.out.println( p.toString());
         System.out.println( "Hello World!" );
 
 
