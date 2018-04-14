@@ -1,30 +1,30 @@
-package db.dao;
+package db.core;
 
 import com.mongodb.client.*;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
-import db.core.DaoHelper;
-import db.core.ReflectHelper;
-import db.model.Person;
 import org.bson.BsonDocument;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 //MongoCollectionImpl
-public class PersonDao {
+public abstract class Dao <T extends Model> {
 
-    private final String collectionName = "person";
-    private final String classPrefix = "";
     private final MongoCollection<Document> collection;
     public final Filter filter;
 
-    public PersonDao() {
-        collection = DaoHelper.getCollection(collectionName);
+    public Dao() {
+        collection = DaoHelper.getCollection(this.getCollectionName());
         filter = new Filter();
     }
+
+    abstract String getCollectionName();
+
+    abstract Class<T> getModelClass();
 
     public long count() {
         return collection.count();
@@ -46,22 +46,22 @@ public class PersonDao {
         return collection.findOneAndDelete(filter);
     }
 
-    public Document findOneAndReplace(final Bson filter, final Document person) {
-        return collection.findOneAndReplace(filter, person);
+    public Document findOneAndReplace(final Bson filter, final T model) {
+        return collection.findOneAndReplace(filter, model.toDocument());
     }
 
     public Document findOneAndUpdate(final Bson filter, final Bson update) {
         return collection.findOneAndUpdate(filter, update);
     }
 
-    public List<BsonDocument> distinct(final String fieldName) {
-        DistinctIterable<BsonDocument> iterable = collection.distinct(fieldName, BsonDocument.class);
-        return toList(iterable);
+    public List<T> distinct(final String fieldName) {
+        DistinctIterable<Document> iterable = collection.distinct(fieldName, Document.class);
+        return toModelList(iterable);
     }
 
-    public List<BsonDocument> distinct(final String fieldName, final Bson filter) {
-        DistinctIterable<BsonDocument> iterable = collection.distinct(fieldName, filter, BsonDocument.class);
-        return toList(iterable);
+    public List<T> distinct(final String fieldName, final Bson filter) {
+        DistinctIterable<Document> iterable = collection.distinct(fieldName, filter, Document.class);
+        return toModelList(iterable);
     }
 
     public List<BsonDocument> aggregate(final List<BsonDocument> pipeline) {
@@ -69,14 +69,14 @@ public class PersonDao {
         return toList(iterable);
     }
 
-    public void insertOne(final Person person) {
-        collection.insertOne(person.toDocument());
+    public void insertOne(final T model) {
+        collection.insertOne(model.toDocument());
     }
 
-    public void insertMany(final List<Person> persons) {
+    public void insertMany(final List<T> models) {
         List<Document> list = new ArrayList();
-        for (Person person:persons) {
-            list.add(person.toDocument());
+        for (T model:models) {
+            list.add(model.toDocument());
         }
         collection.insertMany(list);
     }
@@ -95,12 +95,27 @@ public class PersonDao {
 
     //todo bulk
 
-    private <TResult> List<TResult> toList(MongoIterable<TResult> iterable) {
-        List<TResult> list = new ArrayList<TResult>();
-        MongoCursor<TResult> cursor = iterable.iterator();
+    private List<T> toModelList(MongoIterable<Document> iterable) {
+        List<T> list = new ArrayList<T>();
+        MongoCursor<Document> cursor = iterable.iterator();
         try {
             while (cursor.hasNext()) {
-                TResult item = cursor.next();
+                Document item = cursor.next();
+                list.add(create(item));
+            }
+        } catch (Exception e) {
+            cursor.close();
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    private <E> List<E> toList(MongoIterable<E> iterable){
+        List<E> list = new ArrayList<E>();
+        MongoCursor<E> cursor = iterable.iterator();
+        try {
+            while (cursor.hasNext()) {
+                E item = cursor.next();
                 list.add(item);
             }
         } catch (Exception e) {
@@ -108,6 +123,10 @@ public class PersonDao {
             e.printStackTrace();
         }
         return list;
+    }
+
+    private T create(Map map){
+        return (T)ReflectHelper.create(this.getModelClass().getName(),map);
     }
 
     //参考FindIterableImpl
@@ -144,13 +163,13 @@ public class PersonDao {
             return this;
         }
 
-        public Person first() {
+        public T first() {
             Document doc = iterable.first();
-            return (Person) ReflectHelper.create(Person.class.getName(),doc);
+            return create(doc);
         }
 
-        public List<Document> list() {
-            return toList(iterable);
+        public List<T> list() {
+            return toModelList(iterable);
         }
     }
 

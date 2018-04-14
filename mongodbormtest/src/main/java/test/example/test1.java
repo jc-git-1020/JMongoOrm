@@ -6,11 +6,16 @@ import db.model.Person;
 import db.model.Person_Family;
 import org.bson.BsonDocument;
 import org.bson.BsonString;
+import org.bson.types.ObjectId;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class test1 {
 
     public static void main( String[] args )
     {
+
         PersonDao dao = new PersonDao();
 
         BsonDocument doc = new BsonDocument();

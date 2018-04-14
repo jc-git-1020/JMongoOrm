@@ -1,6 +1,7 @@
 package db.core;
 
 import org.bson.*;
+import org.bson.types.ObjectId;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -11,11 +12,16 @@ public class ReflectHelper {
 
     public static Model create(String className, Map map) {
 
-        String clFulName = Config.MODEL_PACKAGE_PATH.concat(".").concat(className);
         Class<Model> cl = null;
+        Model model = null;
         try {
-            cl = (Class<Model>) Class.forName(clFulName);
+            cl = (Class<Model>) Class.forName(className);
+            model = (Model) cl.newInstance();
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
             e.printStackTrace();
         }
 
@@ -23,58 +29,53 @@ public class ReflectHelper {
         for (Map.Entry<String, Object> entry : set) {
             String key = entry.getKey();
             Object value = entry.getValue();
-            if(key == "_id")
+            if(key.equals("_id") )
                 key = "id";
             String paramName = StringHelper.capitalize(key);
-            if(value instanceof BsonDouble){
-                invokeSetMethod(cl,paramName,((BsonDouble) value).getValue());
-            }else if(value instanceof BsonString){
-                invokeSetMethod(cl,paramName,((BsonString)value).getValue());
-            }else if(value instanceof BsonDocument){
+            if(value instanceof Double){
+                invokeSetMethod(cl,model,paramName,((BsonDouble) value).getValue());
+                continue;
+            }else if(value instanceof String){
+                invokeSetMethod(cl,model,paramName,value.toString());
+                continue;
+            }else if(value instanceof Document){
                 String paramClName = className.concat("_").concat(paramName);
-                String paramClFulName = Config.MODEL_PACKAGE_PATH.concat(".").concat(paramClName);
-                Model childModel = create(paramClFulName,(BsonDocument)value);
-                invokeSetMethod(cl,paramName,childModel);
+                Model childModel = create(paramClName,(Document)value);
+                invokeSetMethod(cl,model,paramName,childModel);
+                continue;
             }else if(value instanceof BsonArray){
-
+                continue;
             }else if(value instanceof BsonBinary){
-
-            }else if(value instanceof BsonObjectId){
-                invokeSetMethod(cl,paramName,((BsonObjectId) value).getValue());
-            }else if(value instanceof BsonBoolean){
-
+                continue;
+            }else if(value instanceof ObjectId){
+                invokeSetMethod(cl,model,paramName,((ObjectId) value));
+                continue;
+            }else if(value instanceof Boolean){
+                continue;
             }else if(value instanceof BsonDateTime){
-
+                continue;
             }else if(value instanceof BsonNull){
-
+                continue;
             }else if(value instanceof BsonRegularExpression){
-
+                continue;
             }else if(value instanceof BsonJavaScript){
-
+                continue;
             }else if(value instanceof BsonJavaScriptWithScope){
-
-            }else if(value instanceof BsonInt32){
-                invokeSetMethod(cl,paramName,((BsonInt32) value).getValue());
+                continue;
+            }else if(value instanceof Integer){
+                invokeSetMethod(cl,model,paramName,((Integer) value));
+                continue;
             }
-        }
-
-        Model model = null;
-        try {
-            model = (Model) cl.newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
         }
 
         return model;
     }
 
-    private static <T extends Model> void invokeSetMethod(Class<T> cl,String paramName,Object... args){
+    private static <T extends Model> void invokeSetMethod(Class<T> cl,Model model, String paramName,Object arg){
         String methodName = "set".concat(paramName);
         try {
-            Method setName = cl.getMethod("setName", String.class);
-            setName.invoke(cl, args);
+            Method method = cl.getMethod(methodName, arg.getClass());
+            method.invoke(model,arg);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

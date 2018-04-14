@@ -47,7 +47,7 @@ public class Person implements Model {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
