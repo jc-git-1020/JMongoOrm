@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Set;
 
+//TODO cl 和 method 做缓存，使用配置项指定是否使用缓存
 public class ReflectHelper {
 
     public static Model create(String className, Map map) {
