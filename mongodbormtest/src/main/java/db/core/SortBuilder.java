@@ -1,46 +1,19 @@
 package db.core;
 
-import org.bson.BsonDocument;
 import org.bson.BsonInt32;
-import org.bson.codecs.configuration.CodecRegistry;
-import org.bson.conversions.Bson;
 
-public class SortBuilder implements Bson {
-
-    BsonDocument doc;
-
-    public SortBuilder() {
-        doc = new BsonDocument();
-    }
+public class SortBuilder extends Builder {
 
     public SortBuilder ascending(final String fieldName) {
         StringHelper.notNullOrEmpty("fieldName", fieldName);
-        doc.append(fieldName, new BsonInt32(1));
+        document.append(fieldName, new BsonInt32(1));
         return this;
     }
 
     public SortBuilder descending(final String fieldName) {
         StringHelper.notNullOrEmpty("fieldName", fieldName);
-        doc.append(fieldName, new BsonInt32(-1));
+        document.append(fieldName, new BsonInt32(-1));
         return this;
     }
 
-    public SortBuilder clear() {
-        doc.clear();
-        return this;
-    }
-
-    @Override
-    public <TDocument> BsonDocument toBsonDocument(Class<TDocument> tDocumentClass, CodecRegistry codecRegistry) {
-        return doc;
-    }
-
-    public String toJson() {
-        return doc.toJson();
-    }
-
-    @Override
-    public String toString() {
-        return doc.toJson();
-    }
 }

@@ -4,122 +4,109 @@ import org.bson.BsonArray;
 import org.bson.BsonDocument;
 import org.bson.BsonObjectId;
 import org.bson.BsonValue;
-import org.bson.codecs.configuration.CodecRegistry;
-import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import static java.util.Arrays.asList;
 
-public class FilterBuilder implements Bson {
-
-    BsonDocument doc;
-
-    public FilterBuilder() {
-        doc = new BsonDocument();
-    }
+public class FilterBuilder extends Builder {
 
     public FilterBuilder eqId(final String id){
-        doc.append("_id",new BsonObjectId(new ObjectId(id)));
+        document.append("_id",new BsonObjectId(new ObjectId(id)));
         return this;
     }
 
     public FilterBuilder eq(final String fieldName, final BsonValue value) {
         StringHelper.notNullOrEmpty("fieldName", fieldName);
-        doc.append(fieldName, value);
+        document.append(fieldName, value);
         return this;
     }
 
     public FilterBuilder ne(final String fieldName, final BsonValue value) {
         StringHelper.notNullOrEmpty("fieldName", fieldName);
-        doc.append(fieldName, getOperatorFilter("$ne", value));
+        document.append(fieldName, getOperatorFilter("$ne", value));
         return this;
     }
 
     public FilterBuilder gt(final String fieldName, final BsonValue value) {
         StringHelper.notNullOrEmpty("fieldName", fieldName);
-        doc.append(fieldName, getOperatorFilter("$gt", value));
+        document.append(fieldName, getOperatorFilter("$gt", value));
         return this;
     }
 
     public FilterBuilder lt(final String fieldName, final BsonValue value) {
         StringHelper.notNullOrEmpty("fieldName", fieldName);
-        doc.append(fieldName, getOperatorFilter("$lt", value));
+        document.append(fieldName, getOperatorFilter("$lt", value));
         return this;
     }
 
     public FilterBuilder gte(final String fieldName, final BsonValue value) {
         StringHelper.notNullOrEmpty("fieldName", fieldName);
-        doc.append(fieldName, getOperatorFilter("$gte", value));
+        document.append(fieldName, getOperatorFilter("$gte", value));
         return this;
     }
 
     public FilterBuilder lte(final String fieldName, final BsonValue value) {
         StringHelper.notNullOrEmpty("fieldName", fieldName);
-        doc.append(fieldName, getOperatorFilter("$lte", value));
+        document.append(fieldName, getOperatorFilter("$lte", value));
         return this;
     }
 
     public FilterBuilder in(final String fieldName, final BsonValue... values) {
         StringHelper.notNullOrEmpty("fieldName", fieldName);
-        doc.append(fieldName, getOperatorFilter("$in", values));
+        document.append(fieldName, getOperatorFilter("$in", values));
         return this;
     }
 
     public FilterBuilder in(final String fieldName, final Iterable<BsonValue> values) {
         StringHelper.notNullOrEmpty("fieldName", fieldName);
-        doc.append(fieldName, getOperatorFilter("$in", values));
+        document.append(fieldName, getOperatorFilter("$in", values));
         return this;
     }
 
     public FilterBuilder nin(final String fieldName, final BsonValue... values) {
         StringHelper.notNullOrEmpty("fieldName", fieldName);
-        doc.append(fieldName, getOperatorFilter("$nin", values));
+        document.append(fieldName, getOperatorFilter("$nin", values));
         return this;
     }
 
     public FilterBuilder nin(final String fieldName, final Iterable<BsonValue> values) {
         StringHelper.notNullOrEmpty("fieldName", fieldName);
-        doc.append(fieldName, getOperatorFilter("$nin", values));
+        document.append(fieldName, getOperatorFilter("$nin", values));
         return this;
     }
 
     public FilterBuilder and(final Iterable<BsonValue> filters) {
-        doc.append("$and", toBsonArray(filters));
+        document.append("$and", toBsonArray(filters));
         return this;
     }
 
     public FilterBuilder and(final BsonValue... filters) {
-        doc.append("$and", toBsonArray(filters));
+        document.append("$and", toBsonArray(filters));
         return this;
     }
 
     public FilterBuilder or(final Iterable<BsonValue> filters) {
-        doc.append("$or", toBsonArray(filters));
+        document.append("$or", toBsonArray(filters));
         return this;
     }
 
     public FilterBuilder or(final BsonValue... filters) {
-        doc.append("$or", toBsonArray(filters));
+        document.append("$or", toBsonArray(filters));
         return this;
     }
 
     public FilterBuilder not(final BsonValue filter) {
-        doc.append("$not", filter);
+        document.append("$not", filter);
         return this;
     }
 
     public FilterBuilder nor(final BsonValue... filters) {
-        doc.append("$nor", toBsonArray(filters));
+        document.append("$nor", toBsonArray(filters));
         return this;
     }
 
     public FilterBuilder nor(final Iterable<BsonValue> filters) {
-        doc.append("$nor", toBsonArray(filters));
-        return this;
-    }
-
-    public FilterBuilder clear() {
-        doc.clear();
+        document.append("$nor", toBsonArray(filters));
         return this;
     }
 
@@ -146,7 +133,6 @@ public class FilterBuilder implements Bson {
         return doc;
     }
 
-
     private BsonArray toBsonArray(final BsonValue... values) {
         return new BsonArray(asList(values));
     }
@@ -155,20 +141,6 @@ public class FilterBuilder implements Bson {
         BsonArray array = new BsonArray();
         values.forEach(array::add);
         return array;
-    }
-
-    @Override
-    public <TDocument> BsonDocument toBsonDocument(Class<TDocument> tDocumentClass, CodecRegistry codecRegistry) {
-        return doc;
-    }
-
-    public String toJson() {
-        return doc.toJson();
-    }
-
-    @Override
-    public String toString() {
-        return doc.toJson();
     }
 
 }

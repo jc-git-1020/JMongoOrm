@@ -1,0 +1,7 @@
+1，cache
+2，xml反射
+3，首字母大写方法名
+4，updatebuilder toDocument 方法
+5，验证各种builder方法
+6，生成界面
+7，完善tour示例

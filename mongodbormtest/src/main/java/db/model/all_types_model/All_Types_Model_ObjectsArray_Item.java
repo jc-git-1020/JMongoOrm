@@ -6,13 +6,13 @@ import org.bson.BsonObjectId;
 import org.bson.BsonString;
 import org.bson.Document;
 
-public class All_Types_Model_Item implements Model {
+public class All_Types_Model_ObjectsArray_Item extends Model {
     private String key;
 
-    public All_Types_Model_Item() {
+    public All_Types_Model_ObjectsArray_Item() {
     }
 
-    public All_Types_Model_Item(String key) {
+    public All_Types_Model_ObjectsArray_Item(String key) {
         this.key = key;
     }
 
@@ -30,4 +30,5 @@ public class All_Types_Model_Item implements Model {
         doc.append("key",new BsonString(key));
         return doc;
     }
+
 }

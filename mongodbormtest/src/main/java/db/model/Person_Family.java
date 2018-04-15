@@ -4,7 +4,7 @@ import db.core.Model;
 import org.bson.BsonString;
 import org.bson.Document;
 
-public class Person_Family implements Model {
+public class Person_Family extends Model {
 
     public String mother;
     public String father;
@@ -41,8 +41,4 @@ public class Person_Family implements Model {
         return doc;
     }
 
-    @Override
-    public String toString() {
-        return toDocument().toJson();
-    }
 }

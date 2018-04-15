@@ -1,46 +1,19 @@
 package db.core;
 
-import org.bson.BsonDocument;
 import org.bson.BsonInt32;
-import org.bson.codecs.configuration.CodecRegistry;
-import org.bson.conversions.Bson;
 
-public class ProjectBuilder implements Bson {
-
-    BsonDocument doc;
-
-    public ProjectBuilder() {
-        doc = new BsonDocument();
-    }
+public class ProjectBuilder extends Builder {
 
     public ProjectBuilder project(final String fieldName) {
         StringHelper.notNullOrEmpty("fieldName", fieldName);
-        doc.append(fieldName, new BsonInt32(1));
+        document.append(fieldName, new BsonInt32(1));
         return this;
     }
 
     public ProjectBuilder exclude(final String fieldName) {
         StringHelper.notNullOrEmpty("fieldName", fieldName);
-        doc.append(fieldName, new BsonInt32(0));
+        document.append(fieldName, new BsonInt32(0));
         return this;
     }
 
-    public ProjectBuilder clear() {
-        doc.clear();
-        return this;
-    }
-
-    @Override
-    public <TDocument> BsonDocument toBsonDocument(Class<TDocument> tDocumentClass, CodecRegistry codecRegistry) {
-        return doc;
-    }
-
-    public String toJson() {
-        return doc.toJson();
-    }
-
-    @Override
-    public String toString() {
-        return doc.toJson();
-    }
 }

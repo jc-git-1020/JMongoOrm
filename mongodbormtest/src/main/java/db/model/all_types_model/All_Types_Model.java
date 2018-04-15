@@ -7,38 +7,38 @@ import org.bson.types.*;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class All_Types_Model implements Model {
+public class All_Types_Model extends Model {
     private ObjectId id;
     private Code CodeField;
     private String StringField;
     private ArrayList ArrayField;
     private Binary BinaryField;
-    private boolean BooleaField;
+    private Boolean BoolField;
     private CodeWithScope CodeWithScopeField;
     private Date DateField;
     //TODO ReferenceField 放弃？ DBRef
     private String NullField;
-    private double DoubleField;
-    private int Int32Field;
-    private long Int64Field;
+    private Double DoubleField;
+    private Integer Int32Field;
+    private Long Int64Field;
     private Decimal128 Decimal128Field;
-    private BsonDocument ObjectField;
+    private All_Types_Model_ObjectField ObjectField;
     private BsonRegularExpression RegExField;
     private BsonTimestamp TimestampField;
     private MinKey MinKeyField;
     private MaxKey MaxKeyField;
-    private BsonArray ObjectsArray;
+    private ArrayList<All_Types_Model_ObjectsArray_Item> ObjectsArray;
 
     public All_Types_Model() {
     }
 
-    public All_Types_Model(ObjectId id, Code codeField, String stringField, ArrayList arrayField, Binary binaryField, boolean booleaField, CodeWithScope codeWithScopeField, Date dateField, String nullField, double doubleField, int int32Field, long int64Field, Decimal128 decimal128Field, BsonDocument objectField, BsonRegularExpression regExField, BsonTimestamp timestampField, MinKey minKeyField, MaxKey maxKeyField, BsonArray objectsArray) {
+    public All_Types_Model(ObjectId id, Code codeField, String stringField, ArrayList arrayField, Binary binaryField, Boolean boolField, CodeWithScope codeWithScopeField, Date dateField, String nullField, double doubleField, Integer int32Field, Long int64Field, Decimal128 decimal128Field, All_Types_Model_ObjectField objectField, BsonRegularExpression regExField, BsonTimestamp timestampField, MinKey minKeyField, MaxKey maxKeyField, ArrayList<All_Types_Model_ObjectsArray_Item> objectsArray) {
         this.id = id;
         CodeField = codeField;
         StringField = stringField;
         ArrayField = arrayField;
         BinaryField = binaryField;
-        BooleaField = booleaField;
+        BoolField = boolField;
         CodeWithScopeField = codeWithScopeField;
         DateField = dateField;
         NullField = nullField;
@@ -94,12 +94,12 @@ public class All_Types_Model implements Model {
         BinaryField = binaryField;
     }
 
-    public boolean isBooleaField() {
-        return BooleaField;
+    public Boolean isBoolField() {
+        return BoolField;
     }
 
-    public void setBooleaField(boolean booleaField) {
-        BooleaField = booleaField;
+    public void setBoolField(Boolean boolField) {
+        BoolField = boolField;
     }
 
     public CodeWithScope getCodeWithScopeField() {
@@ -126,27 +126,27 @@ public class All_Types_Model implements Model {
         NullField = nullField;
     }
 
-    public double getDoubleField() {
+    public Double getDoubleField() {
         return DoubleField;
     }
 
-    public void setDoubleField(double doubleField) {
+    public void setDoubleField(Double doubleField) {
         DoubleField = doubleField;
     }
 
-    public int getInt32Field() {
+    public Integer getInt32Field() {
         return Int32Field;
     }
 
-    public void setInt32Field(int int32Field) {
+    public void setInt32Field(Integer int32Field) {
         Int32Field = int32Field;
     }
 
-    public long getInt64Field() {
+    public Long getInt64Field() {
         return Int64Field;
     }
 
-    public void setInt64Field(long int64Field) {
+    public void setInt64Field(Long int64Field) {
         Int64Field = int64Field;
     }
 
@@ -158,11 +158,11 @@ public class All_Types_Model implements Model {
         Decimal128Field = decimal128Field;
     }
 
-    public BsonDocument getObjectField() {
+    public All_Types_Model_ObjectField getObjectField() {
         return ObjectField;
     }
 
-    public void setObjectField(BsonDocument objectField) {
+    public void setObjectField(All_Types_Model_ObjectField objectField) {
         ObjectField = objectField;
     }
 
@@ -198,25 +198,61 @@ public class All_Types_Model implements Model {
         MaxKeyField = maxKeyField;
     }
 
-    public BsonArray getObjectsArray() {
+    public ArrayList<All_Types_Model_ObjectsArray_Item> getObjectsArray() {
         return ObjectsArray;
     }
 
-    public void setObjectsArray(BsonArray objectsArray) {
+    public void setObjectsArray(ArrayList<All_Types_Model_ObjectsArray_Item> objectsArray) {
         ObjectsArray = objectsArray;
     }
 
-    public boolean isNew(){
+    public Boolean isNew(){
         return id == null;
     }
+
+//    private String StringField;
+//    private ArrayList ArrayField;
+//    private Binary BinaryField;
+//    private Boolean BooleaField;
+//    private CodeWithScope CodeWithScopeField;
+//    private Date DateField;
+//    //TODO ReferenceField 放弃？ DBRef
+//    private String NullField;
+//    private double DoubleField;
+//    private Integer Int32Field;
+//    private Long Int64Field;
+//    private Decimal128 Decimal128Field;
+//    private BsonDocument ObjectField;
+//    private BsonRegularExpression RegExField;
+//    private BsonTimestamp TimestampField;
+//    private MinKey MinKeyField;
+//    private MaxKey MaxKeyField;
+//    private BsonArray ObjectsArray;
 
     @Override
     public Document toDocument() {
         Document doc = new Document();
         if(!isNew())
             doc.append("_id",new BsonObjectId(id));
-
+        doc.append("CodeField",CodeField);
+        doc.append("StringField",StringField);
+        doc.append("ArrayField",ArrayField);
+        doc.append("BinaryField",BinaryField);
+        doc.append("BoolField",BoolField);
+        doc.append("CodeWithScopeField",CodeWithScopeField);
+        doc.append("DateField",DateField);
+        doc.append("NullField",NullField);
+        doc.append("DoubleField",DoubleField);
+        doc.append("Int32Field",Int32Field);
+        doc.append("Int64Field",Int64Field);
+        doc.append("Decimal128Field",Decimal128Field);
+        doc.append("ObjectField",ObjectField.toDocument());
+        doc.append("RegExField",RegExField);
+        doc.append("TimestampField",TimestampField);
+        doc.append("MinKeyField",MinKeyField);
+        doc.append("MaxKeyField",MaxKeyField);
+        doc.append("ObjectsArray", models2Documents(ObjectsArray));
         return doc;
-
     }
+
 }

@@ -10,9 +10,8 @@ import java.util.List;
 
 import static com.mongodb.assertions.Assertions.notNull;
 
-public class UpdateBuilder implements Bson {
+public class UpdateBuilder extends Builder {
 
-    BsonDocument doc;
     BsonDocument setDoc;
     BsonDocument unsetDoc;
     BsonDocument setOnInsertDoc;
@@ -28,10 +27,6 @@ public class UpdateBuilder implements Bson {
     BsonDocument pullAllDoc;
     BsonDocument popDoc;
     BsonDocument bitwiseDoc;
-
-    public UpdateBuilder() {
-        doc = new BsonDocument();
-    }
 
     public UpdateBuilder set(final String fieldName, final BsonValue value) {
         StringHelper.notNullOrEmpty("fieldName", fieldName);
@@ -320,9 +315,8 @@ public class UpdateBuilder implements Bson {
         return this;
     }
 
+    @Override
     public UpdateBuilder clear() {
-        doc.clear();
-        clearIfNotNull(setDoc);
         clearIfNotNull(setDoc);
         clearIfNotNull(unsetDoc);
         clearIfNotNull(setOnInsertDoc);
@@ -338,7 +332,22 @@ public class UpdateBuilder implements Bson {
         clearIfNotNull(pullAllDoc);
         clearIfNotNull(popDoc);
         clearIfNotNull(bitwiseDoc);
-        return this;
+        return (UpdateBuilder)super.clear();
+    }
+
+    @Override
+    public <TDocument> BsonDocument toBsonDocument(Class<TDocument> tDocumentClass, CodecRegistry codecRegistry) {
+        addIfNotEmpty("$set" ,setDoc);
+        addIfNotEmpty("$unset" ,setDoc);
+        addIfNotEmpty("$set" ,setDoc);
+        addIfNotEmpty("$set" ,setDoc);
+        addIfNotEmpty("$set" ,setDoc);
+        addIfNotEmpty("$set" ,setDoc);
+        addIfNotEmpty("$set" ,setDoc);
+        addIfNotEmpty("$set" ,setDoc);
+        addIfNotEmpty("$set" ,setDoc);
+        addIfNotEmpty("$set" ,setDoc);
+        return super.toBsonDocument(tDocumentClass, codecRegistry);
     }
 
     private BsonDocument newIfNull(BsonDocument doc) {
@@ -352,17 +361,9 @@ public class UpdateBuilder implements Bson {
             doc.clear();
     }
 
-    @Override
-    public <TDocument> BsonDocument toBsonDocument(Class<TDocument> tDocumentClass, CodecRegistry codecRegistry) {
-        return doc;
+    private void addIfNotEmpty(String operator ,BsonDocument doc){
+        if(!doc.isEmpty())
+            document.append(operator,doc);
     }
 
-    public String toJson() {
-        return doc.toJson();
-    }
-
-    @Override
-    public String toString() {
-        return doc.toJson();
-    }
 }

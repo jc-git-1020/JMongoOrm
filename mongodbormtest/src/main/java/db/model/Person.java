@@ -7,7 +7,7 @@ import org.bson.BsonString;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-public class Person implements Model {
+public class Person extends Model {
     private ObjectId id;
     private String name;
     private int age;
@@ -70,8 +70,4 @@ public class Person implements Model {
         return doc;
     }
 
-    @Override
-    public String toString() {
-        return toDocument().toJson();
-    }
 }
