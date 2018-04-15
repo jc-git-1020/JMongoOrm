@@ -1,12 +1,13 @@
 package db.core;
 
+import com.mongodb.DBRef;
 import org.bson.*;
-import org.bson.types.ObjectId;
+import org.bson.types.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Consumer;
 
 //TODO cl 和 method 做缓存，使用配置项指定是否使用缓存
 public class ReflectHelper {
@@ -26,6 +27,7 @@ public class ReflectHelper {
             e.printStackTrace();
         }
 
+        //类型转换
         Set<Map.Entry<String, Object>> set = map.entrySet();
         for (Map.Entry<String, Object> entry : set) {
             String key = entry.getKey();
@@ -34,38 +36,54 @@ public class ReflectHelper {
                 key = "id";
             String paramName = StringHelper.capitalize(key);
             if(value instanceof Double){
-                invokeSetMethod(cl,model,paramName,((BsonDouble) value).getValue());
-                continue;
+                invokeSetMethod(cl,model,paramName,((Double) value));
             }else if(value instanceof String){
                 invokeSetMethod(cl,model,paramName,value.toString());
-                continue;
             }else if(value instanceof Document){
-                String paramClName = className.concat("_").concat(paramName);
-                Model childModel = create(paramClName,(Document)value);
-                invokeSetMethod(cl,model,paramName,childModel);
-                continue;
-            }else if(value instanceof BsonArray){
-                continue;
-            }else if(value instanceof BsonBinary){
-                continue;
+                //todo
+//                String paramClName = className.concat("_").concat(paramName);
+//                Model childModel = create(paramClName,(Document)value);
+//                invokeSetMethod(cl,model,paramName,childModel);
+            }else if(value instanceof ArrayList){
+                ArrayList list = (ArrayList) value;
+                if(list.size() == 0 || list.get(0).getClass() != Document.class)
+                    invokeSetMethod(cl,model,paramName,((ArrayList) value));
+                else{
+                    list.forEach(new Consumer<Document>() {
+                        @Override
+                        public void accept(Document o) {
+
+                        }
+                    });
+                }
+            }else if(value instanceof Binary){
+                invokeSetMethod(cl,model,paramName,((Binary) value));
             }else if(value instanceof ObjectId){
                 invokeSetMethod(cl,model,paramName,((ObjectId) value));
-                continue;
             }else if(value instanceof Boolean){
-                continue;
-            }else if(value instanceof BsonDateTime){
-                continue;
-            }else if(value instanceof BsonNull){
-                continue;
+                invokeSetMethod(cl,model,paramName,((Boolean) value));
+            }else if(value instanceof Date){
+                invokeSetMethod(cl,model,paramName,((Date) value));
             }else if(value instanceof BsonRegularExpression){
-                continue;
-            }else if(value instanceof BsonJavaScript){
-                continue;
-            }else if(value instanceof BsonJavaScriptWithScope){
-                continue;
+                invokeSetMethod(cl,model,paramName,((BsonRegularExpression) value));
+            }else if(value instanceof Code){
+                invokeSetMethod(cl,model,paramName,((Code) value));
+            }else if(value instanceof CodeWithScope){
+                invokeSetMethod(cl,model,paramName,((CodeWithScope) value));
             }else if(value instanceof Integer){
                 invokeSetMethod(cl,model,paramName,((Integer) value));
-                continue;
+            }else if(value instanceof Long){
+                invokeSetMethod(cl,model,paramName,((Long) value));
+            }else if(value instanceof Decimal128){
+                invokeSetMethod(cl,model,paramName,((Decimal128) value));
+            }else if(value instanceof BsonTimestamp){
+                invokeSetMethod(cl,model,paramName,((BsonTimestamp) value));
+            } else if(value instanceof DBRef){
+                //invokeSetMethod(cl,model,paramName,((DBRef) value));
+            }else if(value instanceof MinKey){
+                invokeSetMethod(cl,model,paramName,((MinKey) value));
+            }else if(value instanceof MaxKey){
+                invokeSetMethod(cl,model,paramName,((MaxKey) value));
             }
         }
 

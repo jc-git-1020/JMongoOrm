@@ -22,9 +22,9 @@ public abstract class Dao <T extends Model> {
         filter = new Filter();
     }
 
-    abstract String getCollectionName();
+    public abstract String getCollectionName();
 
-    abstract Class<T> getModelClass();
+    public abstract Class<T> getModelClass();
 
     public long count() {
         return collection.count();

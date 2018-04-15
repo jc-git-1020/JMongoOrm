@@ -2,34 +2,37 @@ package db.model.all_types_model;
 
 import db.core.Model;
 import org.bson.*;
-import org.bson.types.ObjectId;
+import org.bson.types.*;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 public class All_Types_Model implements Model {
     private ObjectId id;
-    private BsonJavaScript CodeField;
+    private Code CodeField;
     private String StringField;
-    private BsonArray ArrayField;
-    private BsonBinary BinaryField;
+    private ArrayList ArrayField;
+    private Binary BinaryField;
     private boolean BooleaField;
-    private BsonJavaScriptWithScope CodeWithScopeField;
-    private BsonDateTime DateField;
-    //TODO ReferenceField 放弃？
-    private BsonNull NullField;
+    private CodeWithScope CodeWithScopeField;
+    private Date DateField;
+    //TODO ReferenceField 放弃？ DBRef
+    private String NullField;
     private double DoubleField;
     private int Int32Field;
     private long Int64Field;
-    private BsonDecimal128 Decimal128Field;
+    private Decimal128 Decimal128Field;
     private BsonDocument ObjectField;
     private BsonRegularExpression RegExField;
     private BsonTimestamp TimestampField;
-    private BsonMinKey MinKeyField;
-    private BsonMaxKey MaxKeyField;
+    private MinKey MinKeyField;
+    private MaxKey MaxKeyField;
     private BsonArray ObjectsArray;
 
     public All_Types_Model() {
     }
 
-    public All_Types_Model(ObjectId id, BsonJavaScript codeField, String stringField, BsonArray arrayField, BsonBinary binaryField, boolean booleaField, BsonJavaScriptWithScope codeWithScopeField, BsonDateTime dateField, BsonNull nullField, double doubleField, int int32Field, long int64Field, BsonDecimal128 decimal128Field, BsonDocument objectField, BsonRegularExpression regExField, BsonTimestamp timestampField, BsonMinKey minKeyField, BsonMaxKey maxKeyField, BsonArray objectsArray) {
+    public All_Types_Model(ObjectId id, Code codeField, String stringField, ArrayList arrayField, Binary binaryField, boolean booleaField, CodeWithScope codeWithScopeField, Date dateField, String nullField, double doubleField, int int32Field, long int64Field, Decimal128 decimal128Field, BsonDocument objectField, BsonRegularExpression regExField, BsonTimestamp timestampField, MinKey minKeyField, MaxKey maxKeyField, BsonArray objectsArray) {
         this.id = id;
         CodeField = codeField;
         StringField = stringField;
@@ -59,11 +62,11 @@ public class All_Types_Model implements Model {
         this.id = id;
     }
 
-    public BsonJavaScript getCodeField() {
+    public Code getCodeField() {
         return CodeField;
     }
 
-    public void setCodeField(BsonJavaScript codeField) {
+    public void setCodeField(Code codeField) {
         CodeField = codeField;
     }
 
@@ -75,19 +78,19 @@ public class All_Types_Model implements Model {
         StringField = stringField;
     }
 
-    public BsonArray getArrayField() {
+    public ArrayList getArrayField() {
         return ArrayField;
     }
 
-    public void setArrayField(BsonArray arrayField) {
+    public void setArrayField(ArrayList arrayField) {
         ArrayField = arrayField;
     }
 
-    public BsonBinary getBinaryField() {
+    public Binary getBinaryField() {
         return BinaryField;
     }
 
-    public void setBinaryField(BsonBinary binaryField) {
+    public void setBinaryField(Binary binaryField) {
         BinaryField = binaryField;
     }
 
@@ -99,27 +102,27 @@ public class All_Types_Model implements Model {
         BooleaField = booleaField;
     }
 
-    public BsonJavaScriptWithScope getCodeWithScopeField() {
+    public CodeWithScope getCodeWithScopeField() {
         return CodeWithScopeField;
     }
 
-    public void setCodeWithScopeField(BsonJavaScriptWithScope codeWithScopeField) {
+    public void setCodeWithScopeField(CodeWithScope codeWithScopeField) {
         CodeWithScopeField = codeWithScopeField;
     }
 
-    public BsonDateTime getDateField() {
+    public Date getDateField() {
         return DateField;
     }
 
-    public void setDateField(BsonDateTime dateField) {
+    public void setDateField(Date dateField) {
         DateField = dateField;
     }
 
-    public BsonNull getNullField() {
+    public String getNullField() {
         return NullField;
     }
 
-    public void setNullField(BsonNull nullField) {
+    public void setNullField(String nullField) {
         NullField = nullField;
     }
 
@@ -147,11 +150,11 @@ public class All_Types_Model implements Model {
         Int64Field = int64Field;
     }
 
-    public BsonDecimal128 getDecimal128Field() {
+    public Decimal128 getDecimal128Field() {
         return Decimal128Field;
     }
 
-    public void setDecimal128Field(BsonDecimal128 decimal128Field) {
+    public void setDecimal128Field(Decimal128 decimal128Field) {
         Decimal128Field = decimal128Field;
     }
 
@@ -179,19 +182,19 @@ public class All_Types_Model implements Model {
         TimestampField = timestampField;
     }
 
-    public BsonMinKey getMinKeyField() {
+    public MinKey getMinKeyField() {
         return MinKeyField;
     }
 
-    public void setMinKeyField(BsonMinKey minKeyField) {
+    public void setMinKeyField(MinKey minKeyField) {
         MinKeyField = minKeyField;
     }
 
-    public BsonMaxKey getMaxKeyField() {
+    public MaxKey getMaxKeyField() {
         return MaxKeyField;
     }
 
-    public void setMaxKeyField(BsonMaxKey maxKeyField) {
+    public void setMaxKeyField(MaxKey maxKeyField) {
         MaxKeyField = maxKeyField;
     }
 
@@ -203,8 +206,17 @@ public class All_Types_Model implements Model {
         ObjectsArray = objectsArray;
     }
 
+    public boolean isNew(){
+        return id == null;
+    }
+
     @Override
     public Document toDocument() {
-        return null;
+        Document doc = new Document();
+        if(!isNew())
+            doc.append("_id",new BsonObjectId(id));
+
+        return doc;
+
     }
 }

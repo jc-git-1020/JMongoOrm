@@ -2,9 +2,11 @@ package db.core;
 
 import org.bson.BsonArray;
 import org.bson.BsonDocument;
+import org.bson.BsonObjectId;
 import org.bson.BsonValue;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 import static java.util.Arrays.asList;
 
@@ -14,6 +16,11 @@ public class FilterBuilder implements Bson {
 
     public FilterBuilder() {
         doc = new BsonDocument();
+    }
+
+    public FilterBuilder eqId(final String id){
+        doc.append("_id",new BsonObjectId(new ObjectId(id)));
+        return this;
     }
 
     public FilterBuilder eq(final String fieldName, final BsonValue value) {

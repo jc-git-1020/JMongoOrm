@@ -1,6 +1,9 @@
 package db.model.all_types_model;
 
 import db.core.Model;
+import org.bson.BsonInt32;
+import org.bson.BsonObjectId;
+import org.bson.BsonString;
 import org.bson.Document;
 
 public class All_Types_Model_Item implements Model {
@@ -23,6 +26,8 @@ public class All_Types_Model_Item implements Model {
 
     @Override
     public Document toDocument() {
-        return null;
+        Document doc = new Document();
+        doc.append("key",new BsonString(key));
+        return doc;
     }
 }

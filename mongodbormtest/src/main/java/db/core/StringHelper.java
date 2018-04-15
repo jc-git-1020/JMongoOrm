@@ -10,9 +10,14 @@ public final class StringHelper {
 
     //首字母大写
     public static String capitalize(String str){
+        if(str.length() == 0)
+            return "";
         char[] cs= str.toCharArray();
-        cs[0]-=32;
-        return String.valueOf(cs);
+        if(Character.isLowerCase(cs[0])){
+            cs[0]-=32;
+            return String.valueOf(cs);
+        }else
+            return str;
     }
 
 }
