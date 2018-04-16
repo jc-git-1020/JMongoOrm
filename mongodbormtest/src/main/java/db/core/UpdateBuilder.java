@@ -3,7 +3,6 @@ package db.core;
 import com.mongodb.client.model.PushOptions;
 import org.bson.*;
 import org.bson.codecs.configuration.CodecRegistry;
-import org.bson.conversions.Bson;
 import org.bson.types.Decimal128;
 
 import java.util.List;
@@ -363,7 +362,7 @@ public class UpdateBuilder extends Builder {
 
     private void addIfNotEmpty(String operator ,BsonDocument doc){
         if(!doc.isEmpty())
-            document.append(operator,doc);
+            targetDoc.append(operator,doc);
     }
 
 }
