@@ -1,4 +1,9 @@
 package db.core;
 
-public class ReflectCache {
+//todo hash碰撞
+class ReflectCache {
+
+
+
+
 }

@@ -1,6 +1,6 @@
-1，cache
-2，xml反射
-3，首字母大写方法名
+1，cache   ok
+2，xml反射 注解
+3，首字母大写方法名 注解
 4，updatebuilder toDocument 方法
 5，验证各种builder方法
 6，生成界面
