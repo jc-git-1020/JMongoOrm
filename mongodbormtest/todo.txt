@@ -1,7 +1,9 @@
-1，cache   ok
-2，xml反射 注解
-3，首字母大写方法名 注解
-4，updatebuilder toDocument 方法
-5，验证各种builder方法
-6，生成界面
-7，完善tour示例
+解决xml或json的生成代码，考虑使用注解，mongo的话考虑使用json
+
+
+xml反射 注解
+首字母大写方法名 注解
+updatebuilder toDocument 方法
+验证各种builder方法
+生成界面
+完善tour示例

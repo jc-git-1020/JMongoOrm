@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-class ReflectHelper {
+public class ReflectHelper {
 
     private final static HashMap<String, Class<Model>> clCache = new HashMap<>();
 

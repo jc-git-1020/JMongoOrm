@@ -74,7 +74,7 @@ public abstract class Dao <T extends Model> {
     }
 
     public void insertMany(final List<T> models) {
-        List<Document> list = new ArrayList();
+        List<Document> list = new ArrayList<>();
         for (T model:models) {
             list.add(model.toDocument());
         }
