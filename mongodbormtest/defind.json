@@ -1,0 +1,26 @@
+{
+  "CodeField":"Code",
+  "StringField":{
+    "type":"String",
+    "name":"StringField",
+    "annotation":"string 类型"
+  },
+  "ArrayField":{
+    "type":"ArrayList",
+    "itemType":"Integer"
+  },
+  "BinaryField":"Binary",
+  "CodeWithScopeField":"CodeWithScope",
+  "DateField":"Date",
+  "DoubleField":"Double",
+  "Int32Field" : "Integer",
+  "Int64Field" : "Long",
+  "Decimal128Field" : "Decimal128",
+  "ObjectField" : {
+    "type" : "Object",
+    "fields":{
+      "Key":"String"
+    }
+  }
+
+}
