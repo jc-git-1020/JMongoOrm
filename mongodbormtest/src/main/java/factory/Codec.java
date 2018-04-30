@@ -1,21 +1,19 @@
 package factory;
 
-import org.bson.BsonBinaryReader;
-import org.bson.BsonReader;
-import org.bson.BsonType;
 import org.bson.Document;
-import org.bson.io.BsonInput;
-import org.bson.io.ByteBufferBsonInput;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 public class Codec {
 
-    public void work(){
-        File f = new File("a.txt");
+    public void work() {
+        File f = new File("defind.json");
         FileInputStream fip = null;
         InputStreamReader reader = null;
         String json = "";
@@ -29,12 +27,19 @@ public class Codec {
             }
             json = sb.toString();
             reader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Document doc =  Document.parse(json);
+        Document doc = Document.parse(json);
+
+        Set<Map.Entry<String, Object>> entrySet = doc.entrySet();
+        Iterator<Map.Entry<String, Object>> iterator = entrySet.iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, Object> entry = iterator.next();
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+        }
 
     }
 

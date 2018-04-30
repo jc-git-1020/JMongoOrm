@@ -11,7 +11,7 @@ public class All_Types_Model extends Model {
     private ObjectId id;
     private Code CodeField;
     private String StringField;
-    private ArrayList ArrayField;
+    private ArrayList<Integer> ArrayField;
     private Binary BinaryField;
     private Boolean BoolField;
     private CodeWithScope CodeWithScopeField;
@@ -30,28 +30,6 @@ public class All_Types_Model extends Model {
     private ArrayList<All_Types_Model_ObjectsArray_Item> ObjectsArray;
 
     public All_Types_Model() {
-    }
-
-    public All_Types_Model(ObjectId id, Code codeField, String stringField, ArrayList arrayField, Binary binaryField, Boolean boolField, CodeWithScope codeWithScopeField, Date dateField, String nullField, double doubleField, Integer int32Field, Long int64Field, Decimal128 decimal128Field, All_Types_Model_ObjectField objectField, BsonRegularExpression regExField, BsonTimestamp timestampField, MinKey minKeyField, MaxKey maxKeyField, ArrayList<All_Types_Model_ObjectsArray_Item> objectsArray) {
-        this.id = id;
-        CodeField = codeField;
-        StringField = stringField;
-        ArrayField = arrayField;
-        BinaryField = binaryField;
-        BoolField = boolField;
-        CodeWithScopeField = codeWithScopeField;
-        DateField = dateField;
-        NullField = nullField;
-        DoubleField = doubleField;
-        Int32Field = int32Field;
-        Int64Field = int64Field;
-        Decimal128Field = decimal128Field;
-        ObjectField = objectField;
-        RegExField = regExField;
-        TimestampField = timestampField;
-        MinKeyField = minKeyField;
-        MaxKeyField = maxKeyField;
-        ObjectsArray = objectsArray;
     }
 
     public ObjectId getId() {
@@ -82,7 +60,7 @@ public class All_Types_Model extends Model {
         return ArrayField;
     }
 
-    public void setArrayField(ArrayList arrayField) {
+    public void setArrayField(ArrayList<Integer> arrayField) {
         ArrayField = arrayField;
     }
 
@@ -206,53 +184,81 @@ public class All_Types_Model extends Model {
         ObjectsArray = objectsArray;
     }
 
-    public Boolean isNew(){
+    public Boolean isNew() {
         return id == null;
     }
-
-//    private String StringField;
-//    private ArrayList ArrayField;
-//    private Binary BinaryField;
-//    private Boolean BooleaField;
-//    private CodeWithScope CodeWithScopeField;
-//    private Date DateField;
-//    //TODO ReferenceField 放弃？ DBRef
-//    private String NullField;
-//    private double DoubleField;
-//    private Integer Int32Field;
-//    private Long Int64Field;
-//    private Decimal128 Decimal128Field;
-//    private BsonDocument ObjectField;
-//    private BsonRegularExpression RegExField;
-//    private BsonTimestamp TimestampField;
-//    private MinKey MinKeyField;
-//    private MaxKey MaxKeyField;
-//    private BsonArray ObjectsArray;
 
     @Override
     public Document toDocument() {
         Document doc = new Document();
-        if(!isNew())
-            doc.append("_id",new BsonObjectId(id));
-        doc.append("CodeField",CodeField);
-        doc.append("StringField",StringField);
-        doc.append("ArrayField",ArrayField);
-        doc.append("BinaryField",BinaryField);
-        doc.append("BoolField",BoolField);
-        doc.append("CodeWithScopeField",CodeWithScopeField);
-        doc.append("DateField",DateField);
-        doc.append("NullField",NullField);
-        doc.append("DoubleField",DoubleField);
-        doc.append("Int32Field",Int32Field);
-        doc.append("Int64Field",Int64Field);
-        doc.append("Decimal128Field",Decimal128Field);
-        doc.append("ObjectField",ObjectField.toDocument());
-        doc.append("RegExField",RegExField);
-        doc.append("TimestampField",TimestampField);
-        doc.append("MinKeyField",MinKeyField);
-        doc.append("MaxKeyField",MaxKeyField);
+        if (!isNew()) doc.append("_id", new BsonObjectId(id));
+        doc.append("CodeField", CodeField);
+        doc.append("StringField", StringField);
+        doc.append("ArrayField", ArrayField);
+        doc.append("BinaryField", BinaryField);
+        doc.append("BoolField", BoolField);
+        doc.append("CodeWithScopeField", CodeWithScopeField);
+        doc.append("DateField", DateField);
+        doc.append("NullField", NullField);
+        doc.append("DoubleField", DoubleField);
+        doc.append("Int32Field", Int32Field);
+        doc.append("Int64Field", Int64Field);
+        doc.append("Decimal128Field", Decimal128Field);
+        doc.append("ObjectField", ObjectField.toDocument());
+        doc.append("RegExField", RegExField);
+        doc.append("TimestampField", TimestampField);
+        doc.append("MinKeyField", MinKeyField);
+        doc.append("MaxKeyField", MaxKeyField);
         doc.append("ObjectsArray", models2Documents(ObjectsArray));
         return doc;
+    }
+/////////////////////////内部类分割线///////////////////////////////////////
+
+    public class All_Types_Model_ObjectField extends Model {
+
+        private String Key;
+
+        public All_Types_Model_ObjectField() {
+        }
+
+        public String getKey() {
+            return Key;
+        }
+
+        public void setKey(String key) {
+            Key = key;
+        }
+
+        @Override
+        public Document toDocument() {
+            Document doc = new Document();
+            doc.append("Key",Key);
+            return doc;
+        }
+
+    }
+
+    public class All_Types_Model_ObjectsArray_Item extends Model {
+        private String key;
+
+        public All_Types_Model_ObjectsArray_Item() {
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
+        }
+
+        @Override
+        public Document toDocument() {
+            Document doc = new Document();
+            doc.append("key",new BsonString(key));
+            return doc;
+        }
+
     }
 
 }

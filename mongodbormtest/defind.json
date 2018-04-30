@@ -2,7 +2,6 @@
   "CodeField":"Code",
   "StringField":{
     "type":"String",
-    "name":"StringField",
     "annotation":"string 类型"
   },
   "ArrayField":{
