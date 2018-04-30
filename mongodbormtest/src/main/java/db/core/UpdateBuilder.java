@@ -17,8 +17,10 @@ public class UpdateBuilder extends Builder {
     private BsonDocument renameDoc = new BsonDocument();
     private BsonDocument incDoc = new BsonDocument();
     private BsonDocument mulDoc = new BsonDocument();
-    private BsonDocument minDoc = new BsonDocument();
-    private BsonDocument maxDoc = new BsonDocument();
+    //已经被官方放弃
+//    private BsonDocument minDoc = new BsonDocument();
+    //已经被官方放弃
+//    private BsonDocument maxDoc = new BsonDocument();
     private BsonDocument currentDateDoc = new BsonDocument();
     private BsonDocument addToSetDoc = new BsonDocument();
     private BsonDocument pushDoc = new BsonDocument();
@@ -105,62 +107,6 @@ public class UpdateBuilder extends Builder {
         StringHelper.notNullOrEmpty("fieldName", fieldName);
         notNull("number", number);
         mulDoc.append(fieldName, new BsonDecimal128(number));
-        return this;
-    }
-
-    public UpdateBuilder min(final String fieldName, final int number) {
-        StringHelper.notNullOrEmpty("fieldName", fieldName);
-        notNull("number", number);
-        minDoc.append(fieldName, new BsonInt32(number));
-        return this;
-    }
-
-    public UpdateBuilder min(final String fieldName, final long number) {
-        StringHelper.notNullOrEmpty("fieldName", fieldName);
-        notNull("number", number);
-        minDoc.append(fieldName, new BsonInt64(number));
-        return this;
-    }
-
-    public UpdateBuilder min(final String fieldName, final double number) {
-        StringHelper.notNullOrEmpty("fieldName", fieldName);
-        notNull("number", number);
-        minDoc.append(fieldName, new BsonDouble(number));
-        return this;
-    }
-
-    public UpdateBuilder min(final String fieldName, final Decimal128 number) {
-        StringHelper.notNullOrEmpty("fieldName", fieldName);
-        notNull("number", number);
-        minDoc.append(fieldName, new BsonDecimal128(number));
-        return this;
-    }
-
-    public UpdateBuilder max(final String fieldName, final int number) {
-        StringHelper.notNullOrEmpty("fieldName", fieldName);
-        notNull("number", number);
-        maxDoc.append(fieldName, new BsonInt32(number));
-        return this;
-    }
-
-    public UpdateBuilder max(final String fieldName, final long number) {
-        StringHelper.notNullOrEmpty("fieldName", fieldName);
-        notNull("number", number);
-        maxDoc.append(fieldName, new BsonInt64(number));
-        return this;
-    }
-
-    public UpdateBuilder max(final String fieldName, final double number) {
-        StringHelper.notNullOrEmpty("fieldName", fieldName);
-        notNull("number", number);
-        maxDoc.append(fieldName, new BsonDouble(number));
-        return this;
-    }
-
-    public UpdateBuilder max(final String fieldName, final Decimal128 number) {
-        StringHelper.notNullOrEmpty("fieldName", fieldName);
-        notNull("number", number);
-        maxDoc.append(fieldName, new BsonDecimal128(number));
         return this;
     }
 
@@ -285,8 +231,6 @@ public class UpdateBuilder extends Builder {
         clearIfNotNull(renameDoc);
         clearIfNotNull(incDoc);
         clearIfNotNull(mulDoc);
-        clearIfNotNull(minDoc);
-        clearIfNotNull(maxDoc);
         clearIfNotNull(currentDateDoc);
         clearIfNotNull(addToSetDoc);
         clearIfNotNull(pushDoc);
@@ -300,18 +244,17 @@ public class UpdateBuilder extends Builder {
     @Override
     public <TDocument> BsonDocument toBsonDocument(Class<TDocument> tDocumentClass, CodecRegistry codecRegistry) {
         addIfNotEmpty("$set", setDoc);
-        addIfNotEmpty("$unset", setDoc);
-        addIfNotEmpty("$set", setDoc);
-        addIfNotEmpty("$set", setDoc);
-        addIfNotEmpty("$set", setDoc);
-        addIfNotEmpty("$set", setDoc);
-        addIfNotEmpty("$set", setDoc);
-        addIfNotEmpty("$set", setDoc);
-        addIfNotEmpty("$set", setDoc);
-        addIfNotEmpty("$set", setDoc);
-
-        //todo 生成doc
-
+        addIfNotEmpty("$unset", unsetDoc);
+        addIfNotEmpty("$setOnInsert", setOnInsertDoc);
+        addIfNotEmpty("$rename", renameDoc);
+        addIfNotEmpty("$inc", incDoc);
+        addIfNotEmpty("$mul", mulDoc);
+        addIfNotEmpty("$currentDate", currentDateDoc);
+        addIfNotEmpty("$addToSet", addToSetDoc);
+        addIfNotEmpty("$push", pushDoc);
+        addIfNotEmpty("$pull", pullDoc);
+        addIfNotEmpty("$pop", popDoc);
+        addIfNotEmpty("$bit", bitwiseDoc);
         return super.toBsonDocument(tDocumentClass, codecRegistry);
     }
 

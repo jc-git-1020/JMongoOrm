@@ -1,6 +1,5 @@
 只需要一个构造函数 内部类
 
-updatebuilder toDocument 方法
 验证各种builder方法
 生成界面
 完善tour示例
