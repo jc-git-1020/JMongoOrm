@@ -118,6 +118,8 @@ public class Parser {
         }
     }
 
+
+
     private boolean notNullOrEmpty(String value) {
         if (value != null && value.length() > 0) return true;
         throw new RuntimeException("字段值不能为空，请参考相关文档");

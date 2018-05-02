@@ -1,22 +1,28 @@
 package db.model;
 
-import db.core.Model;
-import org.bson.BsonInt32;
+import db.core.*;
+import org.bson.BsonNull;
 import org.bson.BsonObjectId;
-import org.bson.BsonString;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+
 public class Person extends Model {
+    @MongoObjectId
     private ObjectId id;
+    @MongoSimple(name = "name")
     private String name;
+    @MongoSimple(name = "age")
     private int age;
+    @MongoObject(name = "family")
     private Person_Family family;
 
     public Person() {
     }
 
-    public boolean isNew(){
+    public boolean isNew() {
         return id == null;
     }
 
@@ -62,12 +68,47 @@ public class Person extends Model {
     @Override
     public Document toDocument() {
         Document doc = new Document();
-        if(!isNew())
-            doc.append("_id",new BsonObjectId(id));
-        doc.append("name",new BsonString(name));
-        doc.append("age",new BsonInt32(age));
-        doc.append("family",family.toDocument());
+
+        try {
+            Field[] fields = this.getClass().getDeclaredFields();
+            for (int i = 0; i < fields.length; i++) {
+                Field field = fields[i];
+                MongoObjectId objectId = field.getAnnotation(MongoObjectId.class);
+                if (objectId != null) {
+                    ObjectId oid = (ObjectId) field.get(this);
+                    doc.append(objectId.name(), oid == null ? new BsonNull() : new BsonObjectId(oid));
+                    continue;
+                }
+                MongoSimple simple = field.getAnnotation(MongoSimple.class);
+                if (simple != null) {
+                    Object o = field.get(this);
+                    doc.append(simple.name(), o == null ? new BsonNull() : o);
+                    continue;
+                }
+                MongoObject object = field.getAnnotation(MongoObject.class);
+                if (object != null) {
+                    Object o = field.get(this);
+                    doc.append(object.name(), o == null ? new BsonNull() : ((Model) o).toDocument());
+                    continue;
+                }
+                MongoObjects objects = field.getAnnotation(MongoObjects.class);
+                if (objects != null) {
+                    ArrayList<Model> o = (ArrayList<Model>) field.get(this);
+                    doc.append(objects.name(), o == null ? new BsonNull() : models2Documents(o));
+                }
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
         return doc;
+    }
+
+    private boolean checkFieldType(Field field) {
+
+
+
+        return false;
     }
 
 }

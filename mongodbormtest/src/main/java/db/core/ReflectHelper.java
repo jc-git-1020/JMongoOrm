@@ -2,6 +2,7 @@ package db.core;
 
 import org.bson.Document;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -25,6 +26,31 @@ public class ReflectHelper {
             model = cl.newInstance();
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
+        }
+
+        Map<String, String> n2nMap = new HashMap<>();
+        Field[] fields = cl.getDeclaredFields();
+        for (Field field : fields) {
+            MongoObjectId objectId = field.getAnnotation(MongoObjectId.class);
+            if (objectId != null) {
+                n2nMap.put(objectId.name(), field.getName());
+                continue;
+            }
+            MongoSimple simple = field.getAnnotation(MongoSimple.class);
+            if (simple != null) {
+                n2nMap.put(simple.name(), field.getName());
+                continue;
+            }
+            MongoObject object = field.getAnnotation(MongoObject.class);
+            if (object != null) {
+                n2nMap.put(object.name(), field.getName());
+                continue;
+            }
+            MongoObjects objects = field.getAnnotation(MongoObjects.class);
+            if (objects != null) {
+                n2nMap.put(objects.name(), field.getName());
+                continue;
+            }
         }
 
         Set<Map.Entry<String, Object>> set = map.entrySet();
