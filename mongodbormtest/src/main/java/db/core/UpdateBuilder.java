@@ -17,10 +17,6 @@ public class UpdateBuilder extends Builder {
     private BsonDocument renameDoc = new BsonDocument();
     private BsonDocument incDoc = new BsonDocument();
     private BsonDocument mulDoc = new BsonDocument();
-    //已经被官方放弃
-//    private BsonDocument minDoc = new BsonDocument();
-    //已经被官方放弃
-//    private BsonDocument maxDoc = new BsonDocument();
     private BsonDocument currentDateDoc = new BsonDocument();
     private BsonDocument addToSetDoc = new BsonDocument();
     private BsonDocument pushDoc = new BsonDocument();

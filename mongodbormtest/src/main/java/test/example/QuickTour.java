@@ -8,8 +8,13 @@ public class QuickTour {
     public static void main(String[] args) {
 
         All_Types_ModelDao dao = new All_Types_ModelDao();
+
+//        All_Types_Model model = new All_Types_Model();
+//        model.setStringField("tttt");
+//        dao.insertOne(model);
+
         FilterBuilder fb = new FilterBuilder();
-        fb.eqId("5ad1db3aaf82cb5944733c1b");
+        fb.eqId("5aeaa9b268f5da20203db266");
         All_Types_Model model = dao.filter.find(fb).first();
 
         System.out.println(model.toDocument().toJson());

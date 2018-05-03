@@ -1,6 +1,6 @@
 package db.model.all_types_model;
 
-import db.core.Model;
+import db.core.*;
 import org.bson.*;
 import org.bson.types.*;
 
@@ -8,26 +8,44 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class All_Types_Model extends Model {
+    @MongoObjectId
     private ObjectId id;
+    @MongoSimple(name = "CodeField")
     private Code CodeField;
+    @MongoSimple(name = "StringField")
     private String StringField;
+    @MongoSimple(name = "ArrayField")
     private ArrayList<Integer> ArrayField;
+    @MongoSimple(name = "BinaryField")
     private Binary BinaryField;
+    @MongoSimple(name = "BoolField")
     private Boolean BoolField;
+    @MongoSimple(name = "CodeWithScopeField")
     private CodeWithScope CodeWithScopeField;
+    @MongoSimple(name = "DateField")
     private Date DateField;
     //TODO ReferenceField 放弃？ DBRef
     private String NullField;
+    @MongoSimple(name = "DoubleField")
     private Double DoubleField;
+    @MongoSimple(name = "Int32Field")
     private Integer Int32Field;
+    @MongoSimple(name = "Int64Field")
     private Long Int64Field;
+    @MongoSimple(name = "Decimal128Field")
     private Decimal128 Decimal128Field;
-    private All_Types_Model_ObjectField ObjectField;
+    @MongoObject(name = "ObjectField")
+    private All_Types_Model.ObjectField ObjectField;
+    @MongoSimple(name = "RegExField")
     private BsonRegularExpression RegExField;
+    @MongoSimple(name = "TimestampField")
     private BsonTimestamp TimestampField;
+    @MongoSimple(name = "MinKeyField")
     private MinKey MinKeyField;
+    @MongoSimple(name = "MaxKeyField")
     private MaxKey MaxKeyField;
-    private ArrayList<All_Types_Model_ObjectsArray_Item> ObjectsArray;
+    @MongoObjects(name = "ObjectsArray")
+    private ArrayList<ObjectsArray_Item> ObjectsArray;
 
     public All_Types_Model() {
     }
@@ -136,11 +154,11 @@ public class All_Types_Model extends Model {
         Decimal128Field = decimal128Field;
     }
 
-    public All_Types_Model_ObjectField getObjectField() {
+    public All_Types_Model.ObjectField getObjectField() {
         return ObjectField;
     }
 
-    public void setObjectField(All_Types_Model_ObjectField objectField) {
+    public void setObjectField(All_Types_Model.ObjectField objectField) {
         ObjectField = objectField;
     }
 
@@ -176,49 +194,26 @@ public class All_Types_Model extends Model {
         MaxKeyField = maxKeyField;
     }
 
-    public ArrayList<All_Types_Model_ObjectsArray_Item> getObjectsArray() {
+    public ArrayList<ObjectsArray_Item> getObjectsArray() {
         return ObjectsArray;
     }
 
-    public void setObjectsArray(ArrayList<All_Types_Model_ObjectsArray_Item> objectsArray) {
+    public void setObjectsArray(ArrayList<ObjectsArray_Item> objectsArray) {
         ObjectsArray = objectsArray;
     }
 
     public Boolean isNew() {
         return id == null;
     }
-
-    @Override
-    public Document toDocument() {
-        Document doc = new Document();
-        if (!isNew()) doc.append("_id", new BsonObjectId(id));
-        doc.append("CodeField", CodeField);
-        doc.append("StringField", StringField);
-        doc.append("ArrayField", ArrayField);
-        doc.append("BinaryField", BinaryField);
-        doc.append("BoolField", BoolField);
-        doc.append("CodeWithScopeField", CodeWithScopeField);
-        doc.append("DateField", DateField);
-        doc.append("NullField", NullField);
-        doc.append("DoubleField", DoubleField);
-        doc.append("Int32Field", Int32Field);
-        doc.append("Int64Field", Int64Field);
-        doc.append("Decimal128Field", Decimal128Field);
-        doc.append("ObjectField", ObjectField.toDocument());
-        doc.append("RegExField", RegExField);
-        doc.append("TimestampField", TimestampField);
-        doc.append("MinKeyField", MinKeyField);
-        doc.append("MaxKeyField", MaxKeyField);
-        doc.append("ObjectsArray", models2Documents(ObjectsArray));
-        return doc;
-    }
+    
 /////////////////////////内部类分割线///////////////////////////////////////
 
-    public class All_Types_Model_ObjectField extends Model {
+    public class ObjectField extends Model {
 
+        @MongoSimple(name = "Key")
         private String Key;
 
-        public All_Types_Model_ObjectField() {
+        public ObjectField() {
         }
 
         public String getKey() {
@@ -229,19 +224,13 @@ public class All_Types_Model extends Model {
             Key = key;
         }
 
-        @Override
-        public Document toDocument() {
-            Document doc = new Document();
-            doc.append("Key",Key);
-            return doc;
-        }
-
     }
 
-    public class All_Types_Model_ObjectsArray_Item extends Model {
+    public class ObjectsArray_Item extends Model {
+        @MongoSimple(name = "Key")
         private String key;
 
-        public All_Types_Model_ObjectsArray_Item() {
+        public ObjectsArray_Item() {
         }
 
         public String getKey() {
@@ -250,13 +239,6 @@ public class All_Types_Model extends Model {
 
         public void setKey(String key) {
             this.key = key;
-        }
-
-        @Override
-        public Document toDocument() {
-            Document doc = new Document();
-            doc.append("key",new BsonString(key));
-            return doc;
         }
 
     }

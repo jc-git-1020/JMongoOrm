@@ -1,8 +1,6 @@
 package db.model;
 
 import db.core.Model;
-import org.bson.BsonString;
-import org.bson.Document;
 
 public class Person_Family extends Model {
 
@@ -33,12 +31,12 @@ public class Person_Family extends Model {
         this.father = father;
     }
 
-    @Override
-    public Document toDocument() {
-        Document doc = new Document();
-        doc.append("mother",new BsonString(mother));
-        doc.append("father",new BsonString(father));
-        return doc;
-    }
+//    @Override
+//    public Document toDocument() {
+//        Document doc = new Document();
+//        doc.append("mother",new BsonString(mother));
+//        doc.append("father",new BsonString(father));
+//        return doc;
+//    }
 
 }

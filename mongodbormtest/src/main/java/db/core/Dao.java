@@ -11,13 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-//MongoCollectionImpl
 public abstract class Dao <T extends Model> {
 
     private final MongoCollection<Document> collection;
     public final Filter filter;
 
-    public Dao() {
+    protected Dao() {
         collection = DaoHelper.getCollection(this.getCollectionName());
         filter = new Filter();
     }

@@ -8,16 +8,4 @@ public final class StringHelper {
         return true;
     }
 
-    //首字母大写
-    public static String capitalize(String str){
-        if(str.length() == 0)
-            return "";
-        char[] cs= str.toCharArray();
-        if(Character.isLowerCase(cs[0])){
-            cs[0]-=32;
-            return String.valueOf(cs);
-        }else
-            return str;
-    }
-
 }

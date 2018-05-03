@@ -1,13 +1,12 @@
 package db.model;
 
-import db.core.*;
-import org.bson.BsonNull;
-import org.bson.BsonObjectId;
-import org.bson.Document;
+import db.core.Model;
+import db.core.MongoObject;
+import db.core.MongoObjectId;
+import db.core.MongoSimple;
 import org.bson.types.ObjectId;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 
 public class Person extends Model {
     @MongoObjectId
@@ -65,50 +64,54 @@ public class Person extends Model {
         this.family = family;
     }
 
-    @Override
-    public Document toDocument() {
-        Document doc = new Document();
-
-        try {
-            Field[] fields = this.getClass().getDeclaredFields();
-            for (int i = 0; i < fields.length; i++) {
-                Field field = fields[i];
-                MongoObjectId objectId = field.getAnnotation(MongoObjectId.class);
-                if (objectId != null) {
-                    ObjectId oid = (ObjectId) field.get(this);
-                    doc.append(objectId.name(), oid == null ? new BsonNull() : new BsonObjectId(oid));
-                    continue;
-                }
-                MongoSimple simple = field.getAnnotation(MongoSimple.class);
-                if (simple != null) {
-                    Object o = field.get(this);
-                    doc.append(simple.name(), o == null ? new BsonNull() : o);
-                    continue;
-                }
-                MongoObject object = field.getAnnotation(MongoObject.class);
-                if (object != null) {
-                    Object o = field.get(this);
-                    doc.append(object.name(), o == null ? new BsonNull() : ((Model) o).toDocument());
-                    continue;
-                }
-                MongoObjects objects = field.getAnnotation(MongoObjects.class);
-                if (objects != null) {
-                    ArrayList<Model> o = (ArrayList<Model>) field.get(this);
-                    doc.append(objects.name(), o == null ? new BsonNull() : models2Documents(o));
-                }
-            }
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        return doc;
-    }
+//    @Override
+//    public Document toDocument() {
+//        Document doc = new Document();
+//
+//        try {
+//            Field[] fields = this.getClass().getDeclaredFields();
+//            for (Field field : fields) {
+//                checkFieldType(field);
+//                MongoObjectId objectId = field.getAnnotation(MongoObjectId.class);
+//                if (objectId != null) {
+//                    ObjectId oid = (ObjectId) field.get(this);
+//                    doc.append(objectId.name(), oid == null ? new BsonNull() : new BsonObjectId(oid));
+//                    continue;
+//                }
+//                MongoSimple simple = field.getAnnotation(MongoSimple.class);
+//                if (simple != null) {
+//                    Object o = field.get(this);
+//                    doc.append(simple.name(), o == null ? new BsonNull() : o);
+//                    continue;
+//                }
+//                MongoObject object = field.getAnnotation(MongoObject.class);
+//                if (object != null) {
+//                    Object model = field.get(this);
+//                    doc.append(object.name(), model == null ? new BsonNull() : ((Model) model).toDocument());
+//                    continue;
+//                }
+//                MongoObjects objects = field.getAnnotation(MongoObjects.class);
+//                if (objects != null) {
+//                    ArrayList<Model> models = (ArrayList<Model>) field.get(this);
+//                    doc.append(objects.name(), models == null ? new BsonNull() : models2Documents(models));
+//                }
+//            }
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return doc;
+//    }
 
     private boolean checkFieldType(Field field) {
-
-
-
-        return false;
+        Class type = field.getType();
+        if (type == ObjectId.class) return true;
+        if (type == int.class) return true;
+        if (type == double.class) return true;
+        if (type == long.class) return true;
+        if (type == String.class) return true;
+        if (type.getSuperclass() == Model.class) return true;
+        throw new RuntimeException(field.getName() + " 字段类型不支持，请查看相关文档");
     }
 
 }
