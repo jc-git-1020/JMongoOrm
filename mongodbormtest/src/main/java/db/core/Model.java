@@ -68,19 +68,13 @@ public abstract class Model {
         if (type == Double.class) return true;
         if (type == Long.class) return true;
         if (type == String.class) return true;
-        if (type == Code.class) return true;
         if (type == ArrayList.class) return true;
         if (type == Binary.class) return true;
         if (type == Boolean.class) return true;
-        if (type == CodeWithScope.class) return true;
         if (type == Date.class) return true;
-        if (type == Decimal128.class) return true;
-        if (type == BsonRegularExpression.class) return true;
         if (type == BsonTimestamp.class) return true;
-        if (type == MinKey.class) return true;
-        if (type == MaxKey.class) return true;
         if (type.getSuperclass() == Model.class) return true;
-        throw new RuntimeException(field.getName() + " 字段类型不支持，请查看相关文档");
+        throw new RuntimeException(field.toString() + " 字段类型不支持，请查看相关文档");
     }
 
 }

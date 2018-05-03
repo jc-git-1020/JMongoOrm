@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public abstract class Dao <T extends Model> {
+public abstract class Dao<T extends Model> {
 
     private final MongoCollection<Document> collection;
     public final Filter filter;
@@ -74,7 +74,7 @@ public abstract class Dao <T extends Model> {
 
     public void insertMany(final List<T> models) {
         List<Document> list = new ArrayList<>();
-        for (T model:models) {
+        for (T model : models) {
             list.add(model.toDocument());
         }
         collection.insertMany(list);
@@ -92,8 +92,6 @@ public abstract class Dao <T extends Model> {
         return collection.replaceOne(filter, replacement);
     }
 
-    //todo bulk
-
     private List<T> toModelList(MongoIterable<Document> iterable) {
         List<T> list = new ArrayList<T>();
         MongoCursor<Document> cursor = iterable.iterator();
@@ -109,7 +107,7 @@ public abstract class Dao <T extends Model> {
         return list;
     }
 
-    private <E> List<E> toList(MongoIterable<E> iterable){
+    private <E> List<E> toList(MongoIterable<E> iterable) {
         List<E> list = new ArrayList<E>();
         MongoCursor<E> cursor = iterable.iterator();
         try {
@@ -124,16 +122,15 @@ public abstract class Dao <T extends Model> {
         return list;
     }
 
-    private T create(Map map){
-        return (T)ReflectHelper.create(this.getModelClass().getName(),map);
+    private T create(Map map) {
+        return (T) ReflectHelper.create(this.getModelClass().getName(), map);
     }
 
-    //参考FindIterableImpl
     public class Filter {
 
         FindIterable<Document> iterable;
 
-        public Filter() {
+        private Filter() {
             iterable = collection.find(new BsonDocument());
         }
 
