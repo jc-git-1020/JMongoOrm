@@ -2,7 +2,9 @@ package db.core;
 
 import org.bson.Document;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,8 +18,17 @@ public class ReflectHelper {
     public static Model create(String clName, Map map) {
 
         Class<Model> cl = clCache.getOrDefault(clName, null);
-
-        Model model = getNewInstance(clName, cl);
+        Model model = null;
+        try {
+            if (cl == null) {
+                cl = (Class<Model>) Class.forName(clName);
+                clCache.put(clName, cl);
+            }
+            model = cl.newInstance();
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+            e.printStackTrace();
+        }
+        if (model == null) throw new RuntimeException("model类型必须具有一个无参的构造函数");
 
         Map<String, Field> n2fMap = getName2FieldMap(cl);
 
@@ -37,7 +48,7 @@ public class ReflectHelper {
 
             Object arg = null;
             if (value instanceof Document) {
-                arg = create(field.getName(), (Document) value);
+                arg = create(field.getGenericType().getTypeName(), (Document) value);
             } else if (value instanceof ArrayList) {
                 ArrayList list = (ArrayList) value;
                 if (list.size() == 0 || list.get(0).getClass() != Document.class) arg = value;

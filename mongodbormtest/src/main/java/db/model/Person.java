@@ -14,6 +14,8 @@ public class Person extends Model {
     @MongoSimple(name = "family")
     private ArrayList<String> family;
 
+    public Person(){ }
+
     public Person(String name, int age, ArrayList<String> family) {
         this.name = name;
         this.age = age;

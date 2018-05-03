@@ -17,7 +17,7 @@ public class All_Types_Model extends Model {
     private ArrayList<Integer> ArrayField;
     @MongoSimple(name = "BoolField")
     private Boolean BoolField;
-    @MongoSimple(name = "DateField")
+    @MongoSimple(name = "DateField",ignoreIfNull = true)
     private Date DateField;
     @MongoSimple(name = "DoubleField")
     private Double DoubleField;

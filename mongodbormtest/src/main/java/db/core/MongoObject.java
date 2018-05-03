@@ -9,4 +9,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MongoObject {
     String name();
+    //变量为空时数据库是否插入null值
+    boolean ignoreIfNull() default false;
 }

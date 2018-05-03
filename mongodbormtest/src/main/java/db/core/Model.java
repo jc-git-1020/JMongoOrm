@@ -29,18 +29,21 @@ public abstract class Model {
                 MongoSimple simple = field.getAnnotation(MongoSimple.class);
                 if (simple != null) {
                     Object o = field.get(this);
+                    if (o == null && simple.ignoreIfNull()) continue;
                     doc.append(simple.name(), o == null ? new BsonNull() : o);
                     continue;
                 }
                 MongoObject object = field.getAnnotation(MongoObject.class);
                 if (object != null) {
                     Object model = field.get(this);
+                    if (model == null && simple.ignoreIfNull()) continue;
                     doc.append(object.name(), model == null ? new BsonNull() : ((Model) model).toDocument());
                     continue;
                 }
                 MongoObjects objects = field.getAnnotation(MongoObjects.class);
                 if (objects != null) {
                     ArrayList<Model> models = (ArrayList<Model>) field.get(this);
+                    if (models == null && simple.ignoreIfNull()) continue;
                     doc.append(objects.name(), models == null ? new BsonNull() : models2Documents(models));
                 }
             }
