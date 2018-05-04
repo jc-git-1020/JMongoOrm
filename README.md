@@ -84,7 +84,7 @@ public class All_Types_ModelDao extends Dao<All_Types_Model> {
 }
 
 ```
-然后每一个表对应一个或多个继承model的实体类，如果有内嵌文档的话就需要有多个model的子类，例如下面需要定义多一个person实体类。
+然后每一个表对应一个或多个继承model的实体类，如果有内嵌文档的话就需要有多个model的子类，例如下面需要定义多一个person实体类，而且每个实体类必须要有一个无参的构造函数，反射的时候需要用到。
 
 ```
 public class All_Types_Model extends Model {
