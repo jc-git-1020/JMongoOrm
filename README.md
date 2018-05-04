@@ -9,6 +9,7 @@
 
 常见的orm框架有
 Java：mybatis，hibernate
+
 C#：dapper，EntityFramework，Nhibernate
 
 
@@ -47,14 +48,13 @@ C#：dapper，EntityFramework，Nhibernate
 2，相对于mysql等关系型数据库，会出现同一个字段字段类型不同的情况，给代码的编码埋下坑。
 3，项目使用map作为映射，代码编写不够优雅。
 
-对于MongoDB官方提供的驱动http://mongodb.github.io/mongo-java-driver/3.7/，有两种操作方式，一种是通过map进行字段的检索，这个不够面向对象，另一种是映射pojo类，但是只能映射简单的pojo，MongoDB是文档型数据库，很容易出现各种内嵌文档，此时这个方式就明显不够友好。
+对于MongoDB官方提供的驱动http://mongodb.github.io/mongo-java-driver/3.7/，
+有两种操作方式，一种是通过map进行字段的检索，这个不够面向对象，另一种是映射pojo类，但是只能映射简单的pojo，MongoDB是文档型数据库，很容易出现各种内嵌文档，此时这个方式就明显不够友好。
 
 所以，我萌生了自己写一个简单的orm框架的想法，一来是实际工作中真的遇到了这种场景，其次是对自己技能的一次锻炼和提升。
 
 ----------
 ## 四，框架描述 ##
-项目已经放到git上https://github.com/BinGithub2015/JMongoOrm
-
 同时附带一个测试案例，通过执行测试案例，就能很清晰的知道操作方式。
 
 框架很轻，核心类很少
